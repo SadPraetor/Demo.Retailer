@@ -1,5 +1,22 @@
 # Retailer Interview - API <!-- omit in toc -->
 
+> Comment 2025-01-21  
+I decided to update the project. Original interview was conducted in Sep 2021, with instruciton to use latest LTS .NET version (3.1 at the time).  
+Project is currently only a demo in my portfolio, and not all the requirements from the task need to be met. 
+I disregard some, or explore in other areas.
+Original version can be found on branches `original/master` and `original/repository_pattern`.  
+> - I'm updating this to .NET 9 version
+> - Decided to completely disregard repository pattern
+
+> ### Current TODO list
+> - [ ] Minimal API
+> - [ ] Response caching
+> - [ ] Verify snapshot testing
+
+
+
+
+
 ## Table of contents <!-- omit in toc -->
 - [1. Project description](#1-project-description)
 - [2. Technology description](#2-technology-description)
