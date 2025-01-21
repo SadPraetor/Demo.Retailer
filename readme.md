@@ -15,7 +15,7 @@ Original version can be found on branches `original/master` and `original/reposi
 
 
 
-
+> :heavy_exclamation_mark: readme is not yet updated, some of the work can still be on develop branch
 
 ## Table of contents <!-- omit in toc -->
 - [1. Project description](#1-project-description)
