@@ -1,31 +1,36 @@
+using API.DataAccess;
 using API.DevDataSeed;
-using Microsoft.AspNetCore.Hosting;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 
-namespace RetailerInterviewAPITask {
-    public class Program {
-        public static void Main( string[] args ) {
-            var hostBuilder = CreateHostBuilder( args ).Build();
+var builder = WebApplication.CreateBuilder(args);
 
-            if ( Environment.GetEnvironmentVariable( "ASPNETCORE_ENVIRONMENT" ) == Environments.Development ) {
-                hostBuilder
-                    .MigrateDatabase()
-                    .SeedDatabaseIfEmpty(300);
-            };
+builder.Services.AddDbContext<ProductsDbContext>(options =>
+				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))				 
+			);
 
-            hostBuilder.Run();
-        }
 
-        public static IHostBuilder CreateHostBuilder( string[] args ) =>
-            Host.CreateDefaultBuilder( args )
-                .ConfigureWebHostDefaults( webBuilder => {
-                    webBuilder.UseStartup<Startup>();
-                } );
-    }
+var app = builder.Build();
+
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
+{
+	await app.MigrateDatabaseAsync();
+	await app.SeedDatabaseIfEmptyAsync(3000);
 }
+
+app.MapGet("/test", () => "HELLO THERE!");
+
+var productsGroup = app.MapGroup("/products");
+
+productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken cancellationToken) =>
+{
+	return await context.Products.AsNoTracking().ToListAsync(cancellationToken);
+});
+
+app.Run();
