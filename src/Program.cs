@@ -16,6 +16,14 @@ builder.Services.AddDbContext<ProductsDbContext>(options =>
 			);
 
 
+builder.Services.AddApiVersioning(options =>
+{
+	options.DefaultApiVersion = new ApiVersion(1);
+	options.ReportApiVersions = true;
+	options.AssumeDefaultVersionWhenUnspecified = true;
+	options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
 var app = builder.Build();
 
 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
@@ -26,11 +34,15 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 
 app.MapGet("/test", () => "HELLO THERE!");
 
-var productsGroup = app.MapGroup("/products");
+var productsGroup = app.MapGroup("/api/v{version:apiVersion}/products")
+	.WithApiVersionSet(app.NewApiVersionSet()
+	.HasApiVersion(new ApiVersion(1))
+	.Build());
 
 productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken cancellationToken) =>
 {
 	return await context.Products.AsNoTracking().ToListAsync(cancellationToken);
 });
+	
 
 app.Run();
