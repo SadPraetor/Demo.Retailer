@@ -61,12 +61,12 @@ namespace RetailerInterviewAPITask {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //might need to be adjusted in scenario of proxy (X-Forwarded-For, X-Forwarded-Path)
-            services.AddSingleton<IUriGenerator,UriGenerator>(provider => {
-                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext.Request;
-                var absoluteUri = $"{request.Scheme}://{request.Host.ToUriComponent()}";
-                return new UriGenerator( absoluteUri );
-            } );
+            //services.AddSingleton<IUriGenerator,UriGenerator>(provider => {
+            //    var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+            //    var request = accessor.HttpContext.Request;
+            //    var absoluteUri = $"{request.Scheme}://{request.Host.ToUriComponent()}";
+            //    return new UriGenerator( absoluteUri );
+            //} );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -28,7 +28,7 @@ namespace RetailerInterviewAPITask.Controllers {
         [ProducesResponseType( StatusCodes.Status404NotFound, Type = typeof( ExceptionDto ) )]
         [ProducesResponseType( StatusCodes.Status400BadRequest, Type = typeof( ExceptionDto ) )]
         public async Task<ActionResult<PaginatedResponseModel<Product>>> GetAllAsync20( 
-            [FromQuery] PaginationQuery paginationQuery, CancellationToken cancellationToken ) 
+            [FromQuery] Pagination paginationQuery, CancellationToken cancellationToken ) 
         {
             
             try {
@@ -39,7 +39,7 @@ namespace RetailerInterviewAPITask.Controllers {
                     .Products
                     .AsNoTracking()
                     .OrderBy(x=>x.Id)
-                    .PaginateAsync<Product>( paginationFilter.Page, paginationFilter.PageSize, cancellationToken ) ;
+                    .PaginateAsync<Product>( paginationFilter.Page, paginationFilter.Size, cancellationToken ) ;
 
                 var path = Url.RouteUrl( nameof( GetAllAsync20 ) );
 

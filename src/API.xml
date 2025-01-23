@@ -28,7 +28,7 @@
             <response code="404">New description is too long</response> 
             <response code="404">Product not found</response> 
         </member>
-        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.GetAllAsync20(API.Models.PaginationQuery,System.Threading.CancellationToken)">
+        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.GetAllAsync20(API.Models.Pagination,System.Threading.CancellationToken)">
             <summary>
             Returns paginated model with list of products as member
             </summary>
@@ -36,12 +36,12 @@
             <response code="400">Bad Request, most likely wrong pagination query</response>
             <response code="404">Requested page not found</response>
         </member>
-        <member name="P:API.Models.PaginationQuery.PageSize">
+        <member name="P:API.Models.Pagination.Size">
             <summary> 
             Number of items returned in one request 
             </summary>       
         </member>
-        <member name="P:API.Models.PaginationQuery.Page">
+        <member name="P:API.Models.Pagination.Page">
             <summary> 
             Requested page 
             </summary>  

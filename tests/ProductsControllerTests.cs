@@ -212,7 +212,7 @@ namespace RetailApiTestProject {
             controller_sut.Url = urlHelperMock.Object;
 
             //Act
-            var response = await controller_sut.GetAllAsync20( new PaginationQuery() , new CancellationToken());
+            var response = await controller_sut.GetAllAsync20( new Pagination() , new CancellationToken());
 
             //Assert
             Assert.IsType<OkObjectResult>( response.Result );
@@ -248,7 +248,7 @@ namespace RetailApiTestProject {
 
 
             //Act
-            var response = await controller_sut.GetAllAsync20( new PaginationQuery(10,20), new CancellationToken() );
+            var response = await controller_sut.GetAllAsync20( new Pagination(10,20), new CancellationToken() );
 
             //Assert
             Assert.IsType<NotFoundObjectResult>( response.Result );
@@ -284,7 +284,7 @@ namespace RetailApiTestProject {
 
 
             //Act
-            var response = await controller_sut.GetAllAsync20( new PaginationQuery( 10, -20 ), new CancellationToken() );
+            var response = await controller_sut.GetAllAsync20( new Pagination( 10, -20 ), new CancellationToken() );
 
             //Assert
             Assert.IsType<BadRequestObjectResult>( response.Result );

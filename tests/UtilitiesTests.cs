@@ -125,10 +125,10 @@ namespace RetailApiTestProject {
         [Fact]
         public void PaginationQuery_ShouldDefaultPage1PageSize10() {
 
-            var paginationFilter = new PaginationQuery();
+            var paginationFilter = new Pagination();
 
             Assert.Equal( 1, paginationFilter.Page );
-            Assert.Equal( 10, paginationFilter.PageSize );
+            Assert.Equal( 10, paginationFilter.Size );
 
         }
 
@@ -141,7 +141,7 @@ namespace RetailApiTestProject {
         [Fact]
         public void PaginationFilter_LimitsTo100() {
             var sut = new PaginationFilter( 150, 5 );
-            Assert.Equal( 100, sut.PageSize );
+            Assert.Equal( 100, sut.Size );
         }
     }
 }

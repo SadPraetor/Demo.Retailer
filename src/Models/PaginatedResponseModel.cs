@@ -16,7 +16,7 @@ namespace API.Models {
         public int TotalItems { get; set; }
         public int TotalPages { get; set; }
 
-        public IDictionary<string, string> Links { get; set; }
+        public IDictionary<LinkType, string> Links { get; set; }
 
         public IList<T> Data { get; set; }
 
