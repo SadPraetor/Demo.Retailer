@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace API.Models
 {
-	public record Pagination : IParsable<Pagination>
+	public record Pagination //: IParsable<Pagination>
     {
 
         /// <summary> 
         /// Number of items returned in one request 
-        /// </summary>       
+        /// </summary>    
+        [DefaultValue(50)]
         public int Size { get; set; } = 10;
         /// <summary> 
         /// Requested page 
         /// </summary>  
+        [DefaultValue(1)]
         public int Page { get; set; } = 1;
 
         public Pagination(int size , int page) {

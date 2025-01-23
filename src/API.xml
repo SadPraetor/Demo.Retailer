@@ -39,7 +39,7 @@
         <member name="P:API.Models.Pagination.Size">
             <summary> 
             Number of items returned in one request 
-            </summary>       
+            </summary>    
         </member>
         <member name="P:API.Models.Pagination.Page">
             <summary> 

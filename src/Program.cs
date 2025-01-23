@@ -55,7 +55,7 @@ productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken ca
 	.MapToApiVersion(new ApiVersion(1));
 
 productsGroup.MapGet("/", async (
-	[FromQuery] Pagination pagination,
+	[AsParameters] Pagination pagination,
 	ProductsDbContext context,
 	HttpContext httpContext,
 	[FromServices] IUriGenerator uriGenerator,
@@ -72,7 +72,7 @@ productsGroup.MapGet("/", async (
 			.OrderBy(x => x.Id)
 			.PaginateAsync<Product>(paginationFilter.Page, paginationFilter.Size, cancellationToken);
 
-		var path = httpContext.Request.GetEncodedUrl();
+		var path = new Uri(httpContext.Request.GetEncodedUrl()).GetLeftPart(UriPartial.Path).ToString();
 
 		paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel, path);
 
