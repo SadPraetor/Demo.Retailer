@@ -1,22 +1,24 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace API.Models
 {
-	public record Pagination //: IParsable<Pagination>
+	public record Pagination 
     {
 
         /// <summary> 
         /// Number of items returned in one request 
-        /// </summary>    
-        [DefaultValue(50)]
+        /// </summary>            
         public int Size { get; set; } = 10;
         /// <summary> 
         /// Requested page 
-        /// </summary>  
-        [DefaultValue(1)]
+        /// </summary>         
         public int Page { get; set; } = 1;
 
         public Pagination(int size , int page) {
@@ -28,40 +30,46 @@ namespace API.Models
 
         }
 
-		public static Pagination Parse(string s, IFormatProvider provider)
+		
+
+        private static readonly string _pageParameterName = nameof(Pagination.Page).ToLower();
+        private static readonly string _sizeParameterName = nameof(Pagination.Size).ToLower();
+
+		public static ValueTask<Pagination?> BindAsync(HttpContext context,ParameterInfo parameter)
 		{
-			if(TryParse(s, provider, out var pagination))
+            StringValues pageValue;
+            StringValues sizeValue;
+            int page = 0;
+            int size = 0;
+
+            if(context.Request.Query.TryGetValue(_pageParameterName, out pageValue))
             {
-                return pagination;
+                if(!int.TryParse(pageValue, out page))
+                {
+                    throw new FaultyPaginationQueryException("Page must be number and be greater than 0");
+                }
             }
-            throw new FormatException("Query string conditions for pagination not valid");
-		}
+			else
+			{
+                page = 1;
+			}
 
-		public static bool TryParse([NotNullWhen(true)] string s, IFormatProvider provider, [MaybeNullWhen(false)] out Pagination result)
-		{
-			var queryParameters = QueryHelpers.ParseQuery(s);
+           
 
-          
-            var found =  queryParameters.TryGetValue(nameof(Pagination.Page),out var page) &
-                queryParameters.TryGetValue(nameof(Pagination.Size), out var size);
-
-            if(!found)
+			if (context.Request.Query.TryGetValue(_sizeParameterName, out sizeValue))
+			{
+				if (!int.TryParse(sizeValue, out size))
+				{
+					throw new FaultyPaginationQueryException("Size must be number and be greater than 0");
+				}
+			}
+            else
             {
-                result = null;
-                return false;
+                size = 50;
             }
 
-            var canParse = int.TryParse(page, out var pageParsed) &
-                int.TryParse(size, out var sizeParsed);
 
-            if(!canParse)
-            {
-                result = null;
-                return false;
-            }
-
-            result =  new Pagination(sizeParsed,pageParsed);
-            return true;
+			return ValueTask.FromResult<Pagination?>(new Pagination(size,page));
 		}
 	}
 }

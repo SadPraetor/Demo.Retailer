@@ -55,7 +55,7 @@ productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken ca
 	.MapToApiVersion(new ApiVersion(1));
 
 productsGroup.MapGet("/", async (
-	[AsParameters] Pagination pagination,
+	Pagination pagination,
 	ProductsDbContext context,
 	HttpContext httpContext,
 	[FromServices] IUriGenerator uriGenerator,
