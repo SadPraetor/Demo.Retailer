@@ -1,5 +1,6 @@
 using API.DataAccess;
 using API.DevDataSeed;
+using API.ExceptionHandlers;
 using API.Models;
 using API.Services;
 using Asp.Versioning;
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<ProductsDbContext>(options =>
 			);
 
 builder.Services.AddScoped<IUriGenerator, UriGenerator>();
+builder.Services.AddExceptionHandler<FaultyPaginationQueryExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -39,6 +42,9 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 	await app.MigrateDatabaseAsync();
 	await app.SeedDatabaseIfEmptyAsync(3000);
 }
+
+app.UseExceptionHandler();
+
 
 app.MapGet("/test", () => "HELLO THERE!");
 
