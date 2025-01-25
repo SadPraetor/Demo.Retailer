@@ -1,0 +1,11 @@
+﻿### quick v2 request
+GET https://localhost:5001/api/v2/products
+
+### v2 request with pagination
+GET https://localhost:5001/api/v2/products?page=3&size=100
+
+### v2 request page out of range
+GET https://localhost:5001/api/v2/products?page=35&size=100
+
+### v2 request faulty pagination filter
+GET https://localhost:5001/api/v2/products?page=3&size=ab
