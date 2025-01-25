@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,12 +23,33 @@ namespace API.Endpoints.Products
 		{
 			productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken cancellationToken) =>
 			{
-				return await context.Products.AsNoTracking().ToListAsync(cancellationToken);
+				return TypedResults.Ok(await context.Products.AsNoTracking().ToListAsync(cancellationToken));
 			})
 			.MapToApiVersion(new ApiVersion(1));
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
 				.MapToApiVersion(new ApiVersion(2));
+
+			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
+			{
+				var product = await context.Products.FindAsync(new object[] { id }, cancellationToken);
+
+				if (product == null)
+				{
+					return TypedResults.NotFound(new ProblemDetails
+					{
+						Title = "Record not found",
+						Detail = "Requested ID was not found",
+						Status = StatusCodes.Status404NotFound
+					});
+				}
+
+				return TypedResults.Ok(product);
+			});
+
+
+			productsGroup.MapPatch("/{id:int:min(1)}", UpdateDescriptionAsync)
+				.Accepts<string>("aplication/json");
 
 			return productsGroup;
 		}
@@ -35,7 +57,7 @@ namespace API.Endpoints.Products
 
 
 
-		static async Task<Results<Ok<PaginatedResponseModel<Product>>, NotFound<ProblemDetails>,InternalServerError<ProblemDetails>>> GetProductsWithPagination(
+		static async Task<Results<Ok<PaginatedResponseModel<Product>>, NotFound<ProblemDetails>, InternalServerError<ProblemDetails>>> GetProductsWithPagination(
 			Pagination pagination,
 			ProductsDbContext context,
 			HttpContext httpContext,
@@ -68,7 +90,7 @@ namespace API.Endpoints.Products
 					Status = StatusCodes.Status404NotFound,
 					Title = "Faulty pagination filter"
 				});
-			}			
+			}
 			catch (Exception exception)
 			{
 				return TypedResults.InternalServerError<ProblemDetails>(new ProblemDetails()
@@ -78,7 +100,49 @@ namespace API.Endpoints.Products
 					Status = StatusCodes.Status500InternalServerError
 				});
 			}
-			
+
 		}
+
+		private static readonly int _descriptionLengthLimit = typeof(Product)
+				.GetProperty(nameof(Product.Description))
+				.GetCustomAttributes(typeof(StringLengthAttribute), false)
+				.OfType<StringLengthAttribute>()
+				.FirstOrDefault()?
+				.MaximumLength ?? int.MaxValue;
+
+		private static async Task<Results<Ok<Product>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>>> UpdateDescriptionAsync(int id,
+			[FromBody] string newDescription,
+			ProductsDbContext context,
+			CancellationToken cancellationToken)
+		{
+			if (newDescription.Length > _descriptionLengthLimit)
+			{
+				return TypedResults.BadRequest(new ProblemDetails()
+				{
+					Title = "Description exceeds length limit",
+					Detail = $"New description length {newDescription.Length} exceeds field length limit",
+					Status = StatusCodes.Status400BadRequest,
+				});
+			}
+
+			var product = await context.Products.FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+
+			if (product == null)
+			{
+				return TypedResults.NotFound(new ProblemDetails()
+				{
+					Title = "Record not found",
+					Detail = $"Requested ID {id} was not found",
+					Status = StatusCodes.Status404NotFound
+				});
+			}
+
+			product.Description = newDescription;
+						
+			await context.SaveChangesAsync();
+
+			return TypedResults.Ok(product);
+		}
+
 	}
 }

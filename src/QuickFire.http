@@ -9,3 +9,19 @@ GET https://localhost:5001/api/v2/products?page=35&size=100
 
 ### v2 request faulty pagination filter
 GET https://localhost:5001/api/v2/products?page=3&size=ab
+
+### Request by id
+GET https://localhost:5001/api/v2/products/25
+
+
+### Request by id not found
+GET https://localhost:5001/api/v2/products/250000
+
+
+### Request by id not found
+GET https://localhost:5001/api/v2/products/-10
+
+### Update description
+Patch  https://localhost:5001/api/v1/products/25
+Content-Type: application/json
+{"test"}
