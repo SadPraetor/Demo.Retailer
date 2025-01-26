@@ -5,6 +5,8 @@ using API.ExceptionHandlers;
 using API.Services;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,10 @@ using ApiVersion = Asp.Versioning.ApiVersion;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1");
+builder.Services.AddOpenApi("v2");
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddDbContext<ProductsDbContext>(options =>
 				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))				 
 			);
@@ -39,14 +44,22 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 	await app.SeedDatabaseIfEmptyAsync(3000);
 }
 
-app.UseSwaggerUI(options =>
-{
-	options.SwaggerEndpoint("/openapi/v1.json", "Demo.Api.Retailer");
-});
+app.MapOpenApi();
+app.UseSwaggerUI(
+			options => {
+				// build a swagger endpoint for each discovered API version
+				//var service = app.Services.GetRequiredService<IActionDescriptorCollectionProvider>();
+				
+				//foreach (var description in service.ActionDescriptors.Items)
+				//{
+				//}
+				
+				options.SwaggerEndpoint($"/openapi/v1.json", "Demo.API.Retailer.V1");
+				options.SwaggerEndpoint($"/openapi/v2.json", "Demo.API.Retailer.V2");
+			});
 
 app.UseExceptionHandler();
 
-app.MapOpenApi();
 
 app.MapGet("/test", () => "HELLO THERE!");
 

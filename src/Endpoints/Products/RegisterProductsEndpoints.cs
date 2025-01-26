@@ -26,7 +26,8 @@ namespace API.Endpoints.Products
 			{
 				return TypedResults.Ok(await context.Products.AsNoTracking().ToListAsync(cancellationToken));
 			})
-			.MapToApiVersion(new ApiVersion(1));
+			.MapToApiVersion(new ApiVersion(1))
+			.WithTags("API");
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
 				.MapToApiVersion(new ApiVersion(2));
