@@ -14,6 +14,7 @@ using ApiVersion = Asp.Versioning.ApiVersion;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ProductsDbContext>(options =>
 				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))				 
 			);
@@ -38,8 +39,14 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 	await app.SeedDatabaseIfEmptyAsync(3000);
 }
 
+app.UseSwaggerUI(options =>
+{
+	options.SwaggerEndpoint("/openapi/v1.json", "Demo.Api.Retailer");
+});
+
 app.UseExceptionHandler();
 
+app.MapOpenApi();
 
 app.MapGet("/test", () => "HELLO THERE!");
 
