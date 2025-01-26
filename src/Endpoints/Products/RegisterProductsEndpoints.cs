@@ -51,11 +51,11 @@ namespace API.Endpoints.Products
 
 			productsGroup.MapPatch("/{id:int:min(1)}", async (
 				int id,
-				NewDescriptionDto dto,
+				PatchProductDto dto,
 				ProductsDbContext context,
 				CancellationToken cancellationToken) =>
 				{
-					return await UpdateDescriptionAsync(id, dto.NewDescription, context, cancellationToken);
+					return await UpdateDescriptionAsync(id, dto.Description, context, cancellationToken);
 				})
 				.Accepts<string>("application/json");
 
