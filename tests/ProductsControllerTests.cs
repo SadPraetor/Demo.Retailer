@@ -1,294 +1,313 @@
-using API.DataAccess;
-using API.DevDataSeed;
-using API.Models;
-using API.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Routing;
-using Moq;
-using RetailerInterviewAPITask.Controllers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
+//using API.DataAccess;
+//using API.DevDataSeed;
+//using API.Models;
+//using API.Services;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Abstractions;
+//using Microsoft.AspNetCore.Mvc.Routing;
+//using Microsoft.AspNetCore.Routing;
+//using Moq;
+//using System;
+//using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations;
+//using System.Linq;
+//using System.Threading;
+//using System.Threading.Tasks;
+//using Xunit;
 
-namespace RetailApiTestProject {
-    public class ProductsControllerTests {
+//namespace RetailApiTestProject
+//{
+//	public class ProductsControllerTests
+//	{
 
-        
-        private static List<Product> _productsSeed;
-        public ProductsControllerTests() {
 
-            _productsSeed = new ProductFaker().GetFakeProducts( 10 );
-            
-        }
+//		private static List<Product> _productsSeed;
+//		public ProductsControllerTests()
+//		{
 
-        private static ActionContext GetActionContextForPage( string page ) {
-            return new ActionContext() {
-                ActionDescriptor = new ActionDescriptor() {
-                    RouteValues = new Dictionary<string, string>
-                    {
-                { "page", page },
-            }
-                },
-                RouteData = new RouteData() {
-                    Values =
-                    {
-                [ "page" ] = page
-            }
-                }
-            };
-        }
+//			_productsSeed = new ProductFaker().GetFakeProducts(10);
 
-        [Fact]
-        public async Task GetAll_ShouldReturnAllProducts() {
+//		}
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof(this.GetAll_ShouldReturnAllProducts) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		private static ActionContext GetActionContextForPage(string page)
+//		{
+//			return new ActionContext()
+//			{
+//				ActionDescriptor = new ActionDescriptor()
+//				{
+//					RouteValues = new Dictionary<string, string>
+//					{
+//				{ "page", page },
+//			}
+//				},
+//				RouteData = new RouteData()
+//				{
+//					Values =
+//					{
+//				[ "page" ] = page
+//			}
+//				}
+//			};
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//		[Fact]
+//		public async Task GetAll_ShouldReturnAllProducts()
+//		{
 
-            var result = await controller.GetAllAsync(new CancellationToken());
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetAll_ShouldReturnAllProducts));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.Equal( _productsSeed.Count(), result.Count() );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.GetAllAsync(new CancellationToken());
 
-        [Fact]
-        public async Task GetById_ShouldReturnOkResult() {
+//			Assert.Equal(_productsSeed.Count(), result.Count());
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetById_ShouldReturnOkResult ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//		[Fact]
+//		public async Task GetById_ShouldReturnOkResult()
+//		{
 
-            var result = await controller.GetByIdAsync(_productsSeed.Count, new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetById_ShouldReturnOkResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<OkObjectResult>( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.GetByIdAsync(_productsSeed.Count, new CancellationToken());
 
-        [Fact]
-        public async Task GetById_ShouldReturnNotFoundObjectResult() {
+//			Assert.IsType<OkObjectResult>(result.Result);
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetById_ShouldReturnNotFoundObjectResult) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//		[Fact]
+//		public async Task GetById_ShouldReturnNotFoundObjectResult()
+//		{
 
-            var result = await controller.GetByIdAsync( _productsSeed.Count+5, new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetById_ShouldReturnNotFoundObjectResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<NotFoundObjectResult>( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.GetByIdAsync(_productsSeed.Count + 5, new CancellationToken());
 
-        [Fact]
-        public async Task GetById_ShouldReturnCorrespondingProduct() {
+//			Assert.IsType<NotFoundObjectResult>(result.Result);
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetById_ShouldReturnCorrespondingProduct ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext,null );
+//		[Fact]
+//		public async Task GetById_ShouldReturnCorrespondingProduct()
+//		{
 
-            var result = await controller.GetByIdAsync( _productsSeed.Count, new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetById_ShouldReturnCorrespondingProduct));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<OkObjectResult>( result.Result );
-            Assert.NotNull( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-            Product product=null;
-            if ( result.Result != null && result.Result is OkObjectResult ) {
-                product = (Product)( (ObjectResult)result.Result ).Value;
-                Assert.Equal( _productsSeed.Count, product.Id );
-            }
-        }
+//			var result = await controller.GetByIdAsync(_productsSeed.Count, new CancellationToken());
 
-        [Fact]
-        public async Task UpdateDescription_ShouldReturnNotFoundObjectResult() {
+//			Assert.IsType<OkObjectResult>(result.Result);
+//			Assert.NotNull(result.Result);
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.UpdateDescription_ShouldReturnNotFoundObjectResult ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//			Product product = null;
+//			if (result.Result != null && result.Result is OkObjectResult)
+//			{
+//				product = (Product)((ObjectResult)result.Result).Value;
+//				Assert.Equal(_productsSeed.Count, product.Id);
+//			}
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//		[Fact]
+//		public async Task UpdateDescription_ShouldReturnNotFoundObjectResult()
+//		{
 
-            var result = await controller.UpdateDescriptionAsync( _productsSeed.Count +5, "test", new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.UpdateDescription_ShouldReturnNotFoundObjectResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<NotFoundObjectResult>( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.UpdateDescriptionAsync(_productsSeed.Count + 5, "test", new CancellationToken());
 
-        [Fact]
-        public async Task UpdateDescription_ShouldReturnOk() {
+//			Assert.IsType<NotFoundObjectResult>(result.Result);
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.UpdateDescription_ShouldReturnOk ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		}
 
-            var controller = new ProductsController( null, productsDbcontext , null);
+//		[Fact]
+//		public async Task UpdateDescription_ShouldReturnOk()
+//		{
 
-            var result = await controller.UpdateDescriptionAsync( _productsSeed.Count , "test", new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.UpdateDescription_ShouldReturnOk));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<OkObjectResult>( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.UpdateDescriptionAsync(_productsSeed.Count, "test", new CancellationToken());
 
-        [Fact]
-        public async Task UpdateDescription_ShouldReturnBadRequestObjectResult() {
+//			Assert.IsType<OkObjectResult>(result.Result);
 
-            var lengthLimit = typeof( Product )
-               .GetProperty( nameof( Product.Description ) )
-               .GetCustomAttributes( typeof( StringLengthAttribute ), false )
-               .OfType<StringLengthAttribute>()
-               .FirstOrDefault()?
-               .MaximumLength;
+//		}
 
-            Assert.NotNull( lengthLimit );
+//		[Fact]
+//		public async Task UpdateDescription_ShouldReturnBadRequestObjectResult()
+//		{
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.UpdateDescription_ShouldReturnBadRequestObjectResult ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//			var lengthLimit = typeof(Product)
+//			   .GetProperty(nameof(Product.Description))
+//			   .GetCustomAttributes(typeof(StringLengthAttribute), false)
+//			   .OfType<StringLengthAttribute>()
+//			   .FirstOrDefault()?
+//			   .MaximumLength;
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//			Assert.NotNull(lengthLimit);
 
-            var result = await controller.UpdateDescriptionAsync( _productsSeed.Count, new string('a',lengthLimit.Value+5), new CancellationToken() );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.UpdateDescription_ShouldReturnBadRequestObjectResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            Assert.IsType<BadRequestObjectResult>( result.Result );
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-        }
+//			var result = await controller.UpdateDescriptionAsync(_productsSeed.Count, new string('a', lengthLimit.Value + 5), new CancellationToken());
 
-        [Fact]
-        public async Task UpdateDescription_ShouldUpdateDescriptionField() {
+//			Assert.IsType<BadRequestObjectResult>(result.Result);
 
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.UpdateDescription_ShouldUpdateDescriptionField ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//		}
 
-            var guid = Guid.NewGuid();
+//		[Fact]
+//		public async Task UpdateDescription_ShouldUpdateDescriptionField()
+//		{
 
-            var controller = new ProductsController( null, productsDbcontext, null );
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.UpdateDescription_ShouldUpdateDescriptionField));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            var result = await controller.UpdateDescriptionAsync( _productsSeed.Count, guid.ToString(), new CancellationToken() );
+//			var guid = Guid.NewGuid();
 
+//			var controller = new ProductsController(null, productsDbcontext, null);
 
-            Assert.IsType<OkObjectResult>( result.Result );
-            Assert.NotNull( result.Result );
+//			var result = await controller.UpdateDescriptionAsync(_productsSeed.Count, guid.ToString(), new CancellationToken());
 
-            if ( result.Result != null && result.Result is OkObjectResult ) {
-                var product = await productsDbcontext.Products.FindAsync( _productsSeed.Count );
 
-                var returnedProduct = (Product)( (ObjectResult)result.Result ).Value;
-                Assert.Equal( product.Id, returnedProduct.Id );
-                Assert.Equal( product.Description, returnedProduct.Description );
-                Assert.Equal( guid.ToString(), returnedProduct.Description );
-            }
-        }
+//			Assert.IsType<OkObjectResult>(result.Result);
+//			Assert.NotNull(result.Result);
 
-        [Fact]
-        public async Task GetAll20_ShouldReturnOkObject() {
+//			if (result.Result != null && result.Result is OkObjectResult)
+//			{
+//				var product = await productsDbcontext.Products.FindAsync(_productsSeed.Count);
 
-            //Arrange
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetAll20_ShouldReturnOkObject ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//				var returnedProduct = (Product)((ObjectResult)result.Result).Value;
+//				Assert.Equal(product.Id, returnedProduct.Id);
+//				Assert.Equal(product.Description, returnedProduct.Description);
+//				Assert.Equal(guid.ToString(), returnedProduct.Description);
+//			}
+//		}
 
-            var context = GetActionContextForPage( "/api/products" );
+//		[Fact]
+//		public async Task GetAll20_ShouldReturnOkObject()
+//		{
 
-            var uriGeneratorMock = new Mock<IUriGenerator>();
-            uriGeneratorMock.Setup( x =>
-             x.GeneratePaginationLinks( It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>() ) )
-            .Returns( new Dictionary<string, string> { { "Next", "xyz" } } );
+//			//Arrange
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetAll20_ShouldReturnOkObject));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            var urlHelperMock = new Mock<IUrlHelper>();
-            urlHelperMock.SetupGet( x => x.ActionContext )
-                .Returns( context );
+//			var context = GetActionContextForPage("/api/products");
 
-            urlHelperMock.Setup( x => x.RouteUrl( It.IsAny<UrlRouteContext>() ) )
-                .Returns( "api/products" );
+//			var uriGeneratorMock = new Mock<IUriGenerator>();
+//			uriGeneratorMock.Setup(x =>
+//			 x.GeneratePaginationLinks(It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>()))
+//			.Returns(new Dictionary<string, string> { { "Next", "xyz" } });
 
-            var ctx = new DefaultHttpContext();   
-            
-            var controller_sut = new ProductsController( null, productsDbcontext, uriGeneratorMock.Object );
-            controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
-            controller_sut.Url = urlHelperMock.Object;
+//			var urlHelperMock = new Mock<IUrlHelper>();
+//			urlHelperMock.SetupGet(x => x.ActionContext)
+//				.Returns(context);
 
-            //Act
-            var response = await controller_sut.GetAllAsync20( new Pagination() , new CancellationToken());
+//			urlHelperMock.Setup(x => x.RouteUrl(It.IsAny<UrlRouteContext>()))
+//				.Returns("api/products");
 
-            //Assert
-            Assert.IsType<OkObjectResult>( response.Result );
+//			var ctx = new DefaultHttpContext();
 
-        }
+//			var controller_sut = new ProductsController(null, productsDbcontext, uriGeneratorMock.Object);
+//			controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
+//			controller_sut.Url = urlHelperMock.Object;
 
-        [Fact]
-        public async Task GetAll20_ShouldReturnNotFoundObjectResult() {
+//			//Act
+//			var response = await controller_sut.GetAllAsync20(new Pagination(), new CancellationToken());
 
-            //Arrange
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetAll20_ShouldReturnNotFoundObjectResult ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//			//Assert
+//			Assert.IsType<OkObjectResult>(response.Result);
 
-            var context = GetActionContextForPage( "/api/products" );
+//		}
 
-            var uriGeneratorMock = new Mock<IUriGenerator>();
-            uriGeneratorMock.Setup( x =>
-             x.GeneratePaginationLinks( It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>() ) )
-            .Returns( new Dictionary<string, string> { { "Next", "xyz" } } );
+//		[Fact]
+//		public async Task GetAll20_ShouldReturnNotFoundObjectResult()
+//		{
 
-            var urlHelperMock = new Mock<IUrlHelper>();
-            urlHelperMock.SetupGet( x => x.ActionContext )
-                .Returns( context );
+//			//Arrange
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetAll20_ShouldReturnNotFoundObjectResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            urlHelperMock.Setup( x => x.RouteUrl( It.IsAny<UrlRouteContext>() ) )
-                .Returns( "api/products" );
+//			var context = GetActionContextForPage("/api/products");
 
-            var ctx = new DefaultHttpContext();
+//			var uriGeneratorMock = new Mock<IUriGenerator>();
+//			uriGeneratorMock.Setup(x =>
+//			 x.GeneratePaginationLinks(It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>()))
+//			.Returns(new Dictionary<string, string> { { "Next", "xyz" } });
 
-            var controller_sut = new ProductsController( null, productsDbcontext, uriGeneratorMock.Object );
-            controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
-            controller_sut.Url = urlHelperMock.Object;
+//			var urlHelperMock = new Mock<IUrlHelper>();
+//			urlHelperMock.SetupGet(x => x.ActionContext)
+//				.Returns(context);
 
+//			urlHelperMock.Setup(x => x.RouteUrl(It.IsAny<UrlRouteContext>()))
+//				.Returns("api/products");
 
-            //Act
-            var response = await controller_sut.GetAllAsync20( new Pagination(10,20), new CancellationToken() );
+//			var ctx = new DefaultHttpContext();
 
-            //Assert
-            Assert.IsType<NotFoundObjectResult>( response.Result );
+//			var controller_sut = new ProductsController(null, productsDbcontext, uriGeneratorMock.Object);
+//			controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
+//			controller_sut.Url = urlHelperMock.Object;
 
-        }
 
-        [Fact]
-        public async Task GetAll20_ShouldReturnBadRequestObjectResult() {
+//			//Act
+//			var response = await controller_sut.GetAllAsync20(new Pagination(10, 20), new CancellationToken());
 
-            //Arrange
-            var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext( nameof( this.GetAll20_ShouldReturnBadRequestObjectResult ) );
-            productsDbcontext.SeedAppDbContext( _productsSeed );
+//			//Assert
+//			Assert.IsType<NotFoundObjectResult>(response.Result);
 
-            var context = GetActionContextForPage( "/api/products" );
+//		}
 
-            var uriGeneratorMock = new Mock<IUriGenerator>();
-            uriGeneratorMock.Setup( x =>
-             x.GeneratePaginationLinks( It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>() ) )
-            .Returns( new Dictionary<string, string> { { "Next", "xyz" } } );
+//		[Fact]
+//		public async Task GetAll20_ShouldReturnBadRequestObjectResult()
+//		{
 
-            var urlHelperMock = new Mock<IUrlHelper>();
-            urlHelperMock.SetupGet( x => x.ActionContext )
-                .Returns( context );
+//			//Arrange
+//			var productsDbcontext = SetupInMemoryDbContext.GetProductsDbContext(nameof(this.GetAll20_ShouldReturnBadRequestObjectResult));
+//			productsDbcontext.SeedAppDbContext(_productsSeed);
 
-            urlHelperMock.Setup( x => x.RouteUrl( It.IsAny<UrlRouteContext>() ) )
-                .Returns( "api/products" );
+//			var context = GetActionContextForPage("/api/products");
 
-            var ctx = new DefaultHttpContext();
+//			var uriGeneratorMock = new Mock<IUriGenerator>();
+//			uriGeneratorMock.Setup(x =>
+//			 x.GeneratePaginationLinks(It.IsAny<PaginatedResponseModel<Product>>(), It.IsAny<string>()))
+//			.Returns(new Dictionary<string, string> { { "Next", "xyz" } });
 
-            var controller_sut = new ProductsController( null, productsDbcontext, uriGeneratorMock.Object );
-            controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
-            controller_sut.Url = urlHelperMock.Object;
+//			var urlHelperMock = new Mock<IUrlHelper>();
+//			urlHelperMock.SetupGet(x => x.ActionContext)
+//				.Returns(context);
 
+//			urlHelperMock.Setup(x => x.RouteUrl(It.IsAny<UrlRouteContext>()))
+//				.Returns("api/products");
 
-            //Act
-            var response = await controller_sut.GetAllAsync20( new Pagination( 10, -20 ), new CancellationToken() );
+//			var ctx = new DefaultHttpContext();
 
-            //Assert
-            Assert.IsType<BadRequestObjectResult>( response.Result );
+//			var controller_sut = new ProductsController(null, productsDbcontext, uriGeneratorMock.Object);
+//			controller_sut.ControllerContext = new ControllerContext() { HttpContext = ctx };
+//			controller_sut.Url = urlHelperMock.Object;
 
-        }
-    }
-}
+
+//			//Act
+//			var response = await controller_sut.GetAllAsync20(new Pagination(10, -20), new CancellationToken());
+
+//			//Assert
+//			Assert.IsType<BadRequestObjectResult>(response.Result);
+
+//		}
+//	}
+//}

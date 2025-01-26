@@ -35,8 +35,6 @@ namespace System.Linq
                        .Take( pageSize )
                        .ToListAsync( cancellationToken );
 
-            
-
             return paged;
         }
     }

@@ -4,38 +4,6 @@
         <name>API</name>
     </assembly>
     <members>
-        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.GetAllAsync(System.Threading.CancellationToken)">
-            <summary>
-            Returns list of products
-            </summary>                
-            <response code="200">Products found and returned</response>                   
-        </member>
-        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
-            <summary>
-            Returns specific requested product, by Id
-            </summary>                
-            <param name="id">Id of the product</param> 
-            <response code="200">Product found and returned</response>  
-            <response code="404">Requested product was not found</response> 
-        </member>
-        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.UpdateDescriptionAsync(System.Int32,System.String,System.Threading.CancellationToken)">
-            <summary>
-            Updates description on specific product, identified by Id
-            </summary>               
-            <param name="id">Id of the product</param> 
-            <param name="newDescription">Text/Plain new description. Limit 4000 characters</param> 
-            <response code="200">Product found and description updated</response>  
-            <response code="404">New description is too long</response> 
-            <response code="404">Product not found</response> 
-        </member>
-        <member name="M:RetailerInterviewAPITask.Controllers.ProductsController.GetAllAsync20(API.Models.Pagination,System.Threading.CancellationToken)">
-            <summary>
-            Returns paginated model with list of products as member
-            </summary>
-            <response code="200">Products found and returned</response> 
-            <response code="400">Bad Request, most likely wrong pagination query</response>
-            <response code="404">Requested page not found</response>
-        </member>
         <member name="P:API.Models.Pagination.Size">
             <summary> 
             Number of items returned in one request 

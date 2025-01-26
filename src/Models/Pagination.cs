@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -29,8 +32,29 @@ namespace API.Models
         public Pagination() {
 
         }
-
 		
+        public bool IsValid => Page > 0 && Size > 0;
+
+        public List<string> ValidationMessage { get
+            {
+                if (IsValid)
+                {
+                    return new List<string>();
+                }
+
+                List<string> result = [];
+				if (Page < 1)
+				{
+					result.Add($"Page number must be greater than 0. Current value {Page}");
+				}
+
+				if (Size < 1)
+				{
+					result.Add($"Page size must be greater than 0. Current Value {Size}");
+				}
+
+                return result;
+			} }
 
         private static readonly string _pageParameterName = nameof(Pagination.Page).ToLower();
         private static readonly string _sizeParameterName = nameof(Pagination.Size).ToLower();
@@ -54,8 +78,7 @@ namespace API.Models
                 page = 1;
 			}
 
-           
-
+            
 			if (context.Request.Query.TryGetValue(_sizeParameterName, out sizeValue))
 			{
 				if (!int.TryParse(sizeValue, out size))
@@ -68,6 +91,10 @@ namespace API.Models
                 size = 50;
             }
 
+            if(size > 100)
+            {
+                size = 100;
+            }
 
 			return ValueTask.FromResult<Pagination?>(new Pagination(size,page));
 		}

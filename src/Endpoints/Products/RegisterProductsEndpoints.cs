@@ -78,23 +78,30 @@ namespace API.Endpoints.Products
 
 
 
-		static async Task<Results<Ok<PaginatedResponseModel<Product>>, NotFound<ProblemDetails>, InternalServerError<ProblemDetails>>> GetProductsWithPagination(
+		static async Task<Results<Ok<PaginatedResponseModel<Product>>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>, InternalServerError<ProblemDetails>>> GetProductsWithPagination(
 			Pagination pagination,
 			ProductsDbContext context,
 			HttpContext httpContext,
 			[FromServices] IUriGenerator uriGenerator,
 			CancellationToken cancellationToken)
 		{
-			try
+			if (!pagination.IsValid)
 			{
+				return TypedResults.BadRequest(new ProblemDetails()
+				{
+					Title = "Faulty pagination filter",
+					Detail = "Either page or size filter parameter is of wrong format",
+					Extensions = { ["FailedValidations"] = pagination.ValidationMessage }
+				});
+			}
 
-				var paginationFilter = new PaginationFilter(pagination);
-
+			try
+			{				
 				var paginatedModel = await context
 					.Products
 					.AsNoTracking()
 					.OrderBy(x => x.Id)
-					.PaginateAsync<Product>(paginationFilter.Page, paginationFilter.Size, cancellationToken);
+					.PaginateAsync<Product>(pagination.Page, pagination.Size, cancellationToken);
 
 				var path = new Uri(httpContext.Request.GetEncodedUrl()).GetLeftPart(UriPartial.Path).ToString();
 
@@ -107,12 +114,12 @@ namespace API.Endpoints.Products
 			{
 				return TypedResults.NotFound(new ProblemDetails()
 				{
-					Detail = "Page requested is out of range",
+					Detail = exception.Message,
 					Status = StatusCodes.Status404NotFound,
 					Title = "Faulty pagination filter"
 				});
 			}
-			catch (Exception exception)
+			catch (Exception)
 			{
 				return TypedResults.InternalServerError<ProblemDetails>(new ProblemDetails()
 				{

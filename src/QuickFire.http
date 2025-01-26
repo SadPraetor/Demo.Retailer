@@ -10,6 +10,9 @@ GET https://localhost:5001/api/v2/products?page=35&size=100
 ### v2 request faulty pagination filter
 GET https://localhost:5001/api/v2/products?page=3&size=ab
 
+### v2 request faulty pagination filter
+GET https://localhost:5001/api/v2/products?page=-3&size=-10
+
 ### Request by id
 GET https://localhost:5001/api/v2/products/25
 
