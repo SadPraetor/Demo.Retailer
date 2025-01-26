@@ -22,6 +22,12 @@ GET https://localhost:5001/api/v2/products/250000
 GET https://localhost:5001/api/v2/products/-10
 
 ### Update description
-Patch  https://localhost:5001/api/v1/products/25
+Patch  https://localhost:5001/api/v2/products/25/
 Content-Type: application/json
-{"test"}
+{"NewDescription":"test1"}
+
+### Update description raw string body
+Patch  https://localhost:5001/api/v2/products/25/description
+Content-Type: application/json
+
+test2

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,8 +49,28 @@ namespace API.Endpoints.Products
 			});
 
 
-			productsGroup.MapPatch("/{id:int:min(1)}", UpdateDescriptionAsync)
-				.Accepts<string>("aplication/json");
+			productsGroup.MapPatch("/{id:int:min(1)}", async (
+				int id,
+				NewDescriptionDto dto,
+				ProductsDbContext context,
+				CancellationToken cancellationToken) =>
+				{
+					return await UpdateDescriptionAsync(id, dto.NewDescription, context, cancellationToken);
+				})
+				.Accepts<string>("application/json");
+
+			productsGroup.MapPatch("/{id:int:min(1)}/description",async (
+				int id,
+				HttpRequest request,
+				ProductsDbContext context,
+				CancellationToken cancellationToken) =>
+			{
+				using var reader = new StreamReader(request.Body);
+				var newDescription = await reader.ReadToEndAsync();
+
+				return await UpdateDescriptionAsync(id, newDescription, context, cancellationToken);
+			})
+				.Accepts<string>("application/json");
 
 			return productsGroup;
 		}
@@ -110,8 +131,9 @@ namespace API.Endpoints.Products
 				.FirstOrDefault()?
 				.MaximumLength ?? int.MaxValue;
 
-		private static async Task<Results<Ok<Product>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>>> UpdateDescriptionAsync(int id,
-			[FromBody] string newDescription,
+		private static async Task<Results<Ok<Product>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>>> UpdateDescriptionAsync(
+			int id,
+			string newDescription,
 			ProductsDbContext context,
 			CancellationToken cancellationToken)
 		{
