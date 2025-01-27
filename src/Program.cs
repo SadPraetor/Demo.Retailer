@@ -12,13 +12,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using ApiVersion = Asp.Versioning.ApiVersion;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi("v1");
 builder.Services.AddOpenApi("v2");
-builder.Services.AddEndpointsApiExplorer();
+
+
 
 builder.Services.AddDbContext<ProductsDbContext>(options =>
 				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))				 
@@ -34,7 +37,13 @@ builder.Services.AddApiVersioning(options =>
 	options.ReportApiVersions = true;
 	options.AssumeDefaultVersionWhenUnspecified = true;
 	options.ApiVersionReader = new UrlSegmentApiVersionReader();
+})
+.AddApiExplorer(o=>
+{
+	o.GroupNameFormat = "'v'VVV";
+	o.SubstituteApiVersionInUrl = true;
 });
+
 
 var app = builder.Build();
 
@@ -47,6 +56,7 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 app.MapOpenApi();
 app.UseSwaggerUI(
 			options => {
+//var service = context.ApplicationServices.GetService<IApiVersionDescriptionProvider>();	
 				// build a swagger endpoint for each discovered API version
 				//var service = app.Services.GetRequiredService<IActionDescriptorCollectionProvider>();
 				
