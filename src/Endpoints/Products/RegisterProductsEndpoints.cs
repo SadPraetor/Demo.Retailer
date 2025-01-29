@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -31,7 +32,23 @@ namespace API.Endpoints.Products
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
 				.MapToApiVersion(new ApiVersion(2))				
-				.WithTags("API");
+				.WithTags("API")
+				.WithOpenApi(operation =>
+				{
+					operation.Parameters.Add(new OpenApiParameter()
+					{
+						Name = nameof(Pagination.Page).ToLower(),
+						In = ParameterLocation.Query,
+						Required= true
+					});
+					operation.Parameters.Add(new OpenApiParameter()
+					{
+						Name = nameof(Pagination.Size).ToLower(),
+						In = ParameterLocation.Query,
+						Required = true
+					});
+					return operation;
+				});
 
 			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
 			{
