@@ -30,7 +30,8 @@ namespace API.Endpoints.Products
 			.WithTags("API");
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
-				.MapToApiVersion(new ApiVersion(2));
+				.MapToApiVersion(new ApiVersion(2))				
+				.WithTags("API");
 
 			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
 			{
@@ -49,6 +50,7 @@ namespace API.Endpoints.Products
 				return TypedResults.Ok(product);
 			});
 
+			
 
 			productsGroup.MapPatch("/{id:int:min(1)}", async (
 				int id,

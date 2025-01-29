@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -18,10 +19,12 @@ namespace API.Models
         /// <summary> 
         /// Number of items returned in one request 
         /// </summary>            
+        [FromQuery]
         public int Size { get; set; } = 10;
         /// <summary> 
         /// Requested page 
         /// </summary>         
+        [FromQuery]
         public int Page { get; set; } = 1;
 
         public Pagination(int size , int page) {

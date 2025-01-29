@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Scalar.AspNetCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,24 +55,14 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 }
 
 app.MapOpenApi();
-app.UseSwaggerUI(
-			options => {
-//var service = context.ApplicationServices.GetService<IApiVersionDescriptionProvider>();	
-				// build a swagger endpoint for each discovered API version
-				//var service = app.Services.GetRequiredService<IActionDescriptorCollectionProvider>();
-				
-				//foreach (var description in service.ActionDescriptors.Items)
-				//{
-				//}
-				
-				options.SwaggerEndpoint($"/openapi/v1.json", "Demo.API.Retailer.V1");
-				options.SwaggerEndpoint($"/openapi/v2.json", "Demo.API.Retailer.V2");
-			});
+app.MapScalarApiReference(options =>
+{
+	options.WithTheme(ScalarTheme.Moon);
+});
+
 
 app.UseExceptionHandler();
 
-
-app.MapGet("/test", () => "HELLO THERE!");
 
 var productsGroup = app.MapGroup("/api/v{version:apiVersion}/products")
 	.WithApiVersionSet(app.NewApiVersionSet()
