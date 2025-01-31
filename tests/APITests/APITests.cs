@@ -1,27 +1,28 @@
 ﻿using API.DataAccess;
 using API.DevDataSeed;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using StronglyTypedId.Tests;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Tests
+namespace Tests.APITests
 {
 	[Collection(nameof(ProductsTestsCollection))]
 	public class APITests : IDisposable
 	{
-		protected readonly DbContainerFixture _fixture;
+		protected readonly APITestsFixture _fixture;
 		private readonly ITestOutputHelper _output;
 		private readonly ProductsDbContext _dbContext;
+		
 		protected SqlConnection GetSqlConnection() => _fixture.GetConnection();
 		protected ProductsDbContext CreateDbContext() => new ProductsDbContext(new DbContextOptionsBuilder<ProductsDbContext>()
 			.UseSqlServer(_fixture.GetConnection())
 			.LogTo(_output.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information).Options);
 
-		public APITests(DbContainerFixture fixture, ITestOutputHelper output)
+		public APITests( APITestsFixture fixture, ITestOutputHelper output)
 		{
 			_fixture = fixture;
 			_output = output;
@@ -37,6 +38,9 @@ namespace Tests
 			_dbContext.SaveChanges();
 
 		}
+
+		
+
 		public void Dispose()
 		{
 			_dbContext.Database.EnsureDeleted();
@@ -52,6 +56,16 @@ namespace Tests
 
 			Assert.True(products.Count == 300);
 
+		}
+
+		[Fact]
+		public async Task GetProductsV1_GetsAllProducts()
+		{
+			var client = _fixture.CreateClient();
+
+			var result = await client.GetAsync("api/v1/products");
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
 		}
 	}
 }

@@ -103,3 +103,5 @@ productsGroup.RegisterProductsAPIEndpoints();
 
 
 app.Run();
+
+public partial class Program { } //for testsfs
