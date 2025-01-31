@@ -12,7 +12,7 @@ namespace API.ExceptionHandlers
 	{
 		public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
 		{
-			if(exception is not FaultyPaginationQueryException)
+			if (exception is not FaultyPaginationQueryException)
 			{
 				return false;
 			}
@@ -26,7 +26,7 @@ namespace API.ExceptionHandlers
 
 			httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 			await httpContext.Response.WriteAsJsonAsync(problemDetials, cancellationToken);
-				
+
 			return true;
 		}
 	}

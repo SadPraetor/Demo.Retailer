@@ -1,6 +1,8 @@
-﻿namespace API.Models {
-    public enum LinkType {
-        Prev,
-        Next
-    }
+﻿namespace API.Models
+{
+	public enum LinkType
+	{
+		Prev,
+		Next
+	}
 }

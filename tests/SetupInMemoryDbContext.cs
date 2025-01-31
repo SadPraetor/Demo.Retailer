@@ -1,34 +1,36 @@
 ﻿using API.DataAccess;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace RetailApiTestProject {
-    public static class SetupInMemoryDbContext {
-        public static ProductsDbContext GetProductsDbContext( string dbName ) {
-            //set up the options to use for this dbcontext
-            var options = new DbContextOptionsBuilder<ProductsDbContext>()
-                .UseInMemoryDatabase( databaseName: dbName )
-                //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                .Options;
+namespace RetailApiTestProject
+{
+	public static class SetupInMemoryDbContext
+	{
+		public static ProductsDbContext GetProductsDbContext(string dbName)
+		{
+			//set up the options to use for this dbcontext
+			var options = new DbContextOptionsBuilder<ProductsDbContext>()
+				.UseInMemoryDatabase(databaseName: dbName)
+				//.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+				.Options;
 
-            var dbContext = new ProductsDbContext( options );
+			var dbContext = new ProductsDbContext(options);
 
-            return dbContext;
-        }
-        public static void SeedAppDbContext( this ProductsDbContext weatherForecastDbcontext, List<Product> workDays ) {
-            // add companies
+			return dbContext;
+		}
+		public static void SeedAppDbContext(this ProductsDbContext weatherForecastDbcontext, List<Product> workDays)
+		{
+			// add companies
 
 
-            weatherForecastDbcontext.Products.AddRange( workDays );
-            weatherForecastDbcontext.SaveChanges();
+			weatherForecastDbcontext.Products.AddRange(workDays);
+			weatherForecastDbcontext.SaveChanges();
 
-            //and then to detach everything 
-            //foreach ( var entity in weatherForecastDbcontext.ChangeTracker.Entries() ) {
-            //    entity.State = EntityState.Detached;
-            //}
-        }
-    }
+			//and then to detach everything 
+			//foreach ( var entity in weatherForecastDbcontext.ChangeTracker.Entries() ) {
+			//    entity.State = EntityState.Detached;
+			//}
+		}
+	}
 }

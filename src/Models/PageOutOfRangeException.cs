@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace API.Models {
-    [Serializable]
-    internal class PageOutOfRangeException : Exception {
-        public PageOutOfRangeException() :base("Requested page is out of range"){
-        }
+namespace API.Models
+{
+	[Serializable]
+	internal class PageOutOfRangeException : Exception
+	{
+		public PageOutOfRangeException() : base("Requested page is out of range")
+		{
+		}
 
-        public PageOutOfRangeException( string message ) : base( message ) {
-        }
+		public PageOutOfRangeException(string message) : base(message)
+		{
+		}
 
-        public PageOutOfRangeException( string message, Exception innerException ) : base( message, innerException ) {
-        }
+		public PageOutOfRangeException(string message, Exception innerException) : base(message, innerException)
+		{
+		}
 
-        protected PageOutOfRangeException( SerializationInfo info, StreamingContext context ) : base( info, context ) {
-        }
-    }
+		protected PageOutOfRangeException(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+		}
+	}
 }

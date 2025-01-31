@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -31,7 +30,7 @@ namespace API.Endpoints.Products
 			.WithTags("API");
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
-				.MapToApiVersion(new ApiVersion(2))				
+				.MapToApiVersion(new ApiVersion(2))
 				.WithTags("API");
 
 			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
@@ -51,7 +50,7 @@ namespace API.Endpoints.Products
 				return TypedResults.Ok(product);
 			});
 
-			
+
 
 			productsGroup.MapPatch("/{id:int:min(1)}", async (
 				int id,
@@ -63,7 +62,7 @@ namespace API.Endpoints.Products
 				})
 				.Accepts<string>("application/json");
 
-			productsGroup.MapPatch("/{id:int:min(1)}/description",async (
+			productsGroup.MapPatch("/{id:int:min(1)}/description", async (
 				int id,
 				HttpRequest request,
 				ProductsDbContext context,
@@ -100,7 +99,7 @@ namespace API.Endpoints.Products
 			}
 
 			try
-			{				
+			{
 				var paginatedModel = await context
 					.Products
 					.AsNoTracking()
@@ -158,7 +157,7 @@ namespace API.Endpoints.Products
 				});
 			}
 
-			var product = await context.Products.FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+			var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
 			if (product == null)
 			{
@@ -171,7 +170,7 @@ namespace API.Endpoints.Products
 			}
 
 			product.Description = newDescription;
-						
+
 			await context.SaveChangesAsync();
 
 			return TypedResults.Ok(product);
