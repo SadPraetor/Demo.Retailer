@@ -1,0 +1,19 @@
+﻿{
+  Status: 200 OK,
+  Headers: {
+    api-deprecated-versions: 1,
+    api-supported-versions: 2
+  },
+  Content: {
+    Headers: {
+      Content-Type: application/json; charset=utf-8
+    },
+    Value: {
+      id: 25,
+      name: Generic Fresh Mouse,
+      imgUri: https://via.placeholder.com/300x300/products/d80226d7-29a9-4156-d2e4-f9316a0ce3a2.png,
+      price: 139.99,
+      description: The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality
+    }
+  }
+}

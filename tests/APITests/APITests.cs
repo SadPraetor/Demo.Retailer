@@ -1,8 +1,10 @@
 ﻿using API.DataAccess;
 using API.DevDataSeed;
+using API.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using VerifyTests;
@@ -80,6 +82,46 @@ namespace Tests.APITests
 			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
 
 			await Verifier.Verify(result);
+		}
+
+		[Fact]
+		public async Task GetProductV1_ShouldReturnItem()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var item = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+			var result = await client.GetAsync("api/v1/products/25");
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == item.Id);
+			Assert.True(apiResponseItem.Description == item.Description);
+		}
+
+		[Fact]
+		public async Task GetProductV2_ShouldReturnItem()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var item = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+			var result = await client.GetAsync("api/v2/products/25");
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == item.Id);
+			Assert.True(apiResponseItem.Description == item.Description);
 		}
 	}
 }
