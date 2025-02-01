@@ -1,15 +1,27 @@
 ﻿using API.DataAccess;
 using API.DevDataSeed;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Tests.APITests
 {
+	public static class ModuleInitializer
+	{
+		[ModuleInitializer]
+		public static void Initialize()
+		{
+			VerifyHttp.Initialize();
+			Verifier.UseSourceFileRelativeDirectory("snapshosts");
+		}
+	}
+
 	[Collection(nameof(ProductsTestsCollection))]
 	public class APITests : IDisposable
 	{
@@ -66,6 +78,8 @@ namespace Tests.APITests
 			var result = await client.GetAsync("api/v1/products");
 
 			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
 		}
 	}
 }

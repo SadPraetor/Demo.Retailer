@@ -266,3 +266,5 @@ Logs*.json
 **/docker-elk-serilog-web-buffer*
 secrets.json
 secrets*.json
+
+*.received.*
