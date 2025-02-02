@@ -240,5 +240,29 @@ namespace Tests.APITests
 			Assert.True(apiResponseItem.Description == updatedItem.Description);
 			Assert.True(apiResponseItem.Description == "new description by dto");
 		}
+
+		[Fact]
+		public async Task GetProductV2_WithFilterPage2_ShouldReturnItems()
+		{
+			var client = _fixture.CreateClient();
+
+			var result = await client.GetAsync("api/v2/products?page=2&size=10");
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
+		}
+
+		[Fact]
+		public async Task GetProductV2_WithFilterLastPage_ShouldReturnItemsNoNextPage()
+		{
+			var client = _fixture.CreateClient();
+
+			var result = await client.GetAsync("api/v2/products?page=30&size=10");
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
+		}
 	}
 }

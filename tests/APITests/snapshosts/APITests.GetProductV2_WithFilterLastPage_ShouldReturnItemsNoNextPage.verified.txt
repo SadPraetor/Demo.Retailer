@@ -1,0 +1,93 @@
+﻿{
+  Status: 200 OK,
+  Headers: {
+    api-deprecated-versions: 1,
+    api-supported-versions: 2
+  },
+  Content: {
+    Headers: {
+      Content-Type: application/json; charset=utf-8
+    },
+    Value: {
+      pageSize: 10,
+      currentPage: 30,
+      totalItems: 300,
+      totalPages: 30,
+      links: {
+        Prev: http://localhost/api/v2/products?size=10&page=29
+      },
+      data: [
+        {
+          id: 291,
+          name: Fantastic Steel Shoes,
+          imgUri: https://via.placeholder.com/300x300/products/84b18f08-602c-7cd3-4a68-21a054841f3c.png,
+          price: 79.01,
+          description: The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive
+        },
+        {
+          id: 292,
+          name: Tasty Plastic Hat,
+          imgUri: https://via.placeholder.com/300x300/products/268ad8d8-2158-8f69-61de-1ad590583db1.png,
+          price: 532.28,
+          description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+        },
+        {
+          id: 293,
+          name: Unbranded Wooden Shoes,
+          imgUri: https://via.placeholder.com/300x300/products/fe5660b4-d873-53bc-d2ca-bd96b6d8fa06.png,
+          price: 694.92,
+          description: Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles
+        },
+        {
+          id: 294,
+          name: Small Rubber Pizza,
+          imgUri: https://via.placeholder.com/300x300/products/c6f47f85-eafe-9388-e319-0c592429cf59.png,
+          price: 511.99,
+          description: Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support
+        },
+        {
+          id: 295,
+          name: Practical Metal Cheese,
+          imgUri: https://via.placeholder.com/300x300/products/65a2f917-43b7-57f5-7caa-7871dbd709ad.png,
+          price: 659.62,
+          description: The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J
+        },
+        {
+          id: 296,
+          name: Generic Concrete Tuna,
+          imgUri: https://via.placeholder.com/300x300/products/d0b45d8a-ae36-8104-e8f8-373467fa2498.png,
+          price: 757.7,
+          description: The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive
+        },
+        {
+          id: 297,
+          name: Fantastic Soft Pants,
+          imgUri: https://via.placeholder.com/300x300/products/f84eb2e0-0050-01b6-43cd-6a746f44b1e6.png,
+          price: 919.64,
+          description: The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality
+        },
+        {
+          id: 298,
+          name: Sleek Fresh Bacon,
+          imgUri: https://via.placeholder.com/300x300/products/0f6fa63a-4188-859d-9f59-06277c01823e.png,
+          price: 647.69,
+          description: Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals
+        },
+        {
+          id: 299,
+          name: Handmade Concrete Mouse,
+          imgUri: https://via.placeholder.com/300x300/products/df8af3ca-4de7-5838-39a1-a05f78a88840.png,
+          price: 447.99,
+          description: Carbonite web goalkeeper gloves are ergonomically designed to give easy fit
+        },
+        {
+          id: 300,
+          name: Incredible Concrete Tuna,
+          imgUri: https://via.placeholder.com/300x300/products/afc8486d-ce63-4fe7-30db-ccd0db7c84a9.png,
+          price: 5.29,
+          description: New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016
+        }
+      ]
+    }
+  }
+}

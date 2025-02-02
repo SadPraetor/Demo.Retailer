@@ -1,0 +1,94 @@
+﻿{
+  Status: 200 OK,
+  Headers: {
+    api-deprecated-versions: 1,
+    api-supported-versions: 2
+  },
+  Content: {
+    Headers: {
+      Content-Type: application/json; charset=utf-8
+    },
+    Value: {
+      pageSize: 10,
+      currentPage: 2,
+      totalItems: 300,
+      totalPages: 30,
+      links: {
+        Next: http://localhost/api/v2/products?size=10&page=3,
+        Prev: http://localhost/api/v2/products?size=10&page=1
+      },
+      data: [
+        {
+          id: 11,
+          name: Practical Frozen Bacon,
+          imgUri: https://via.placeholder.com/300x300/products/b3a40f82-f8f8-07eb-3c4c-ce1d8772ace8.png,
+          price: 245.6,
+          description: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+        },
+        {
+          id: 12,
+          name: Fantastic Steel Chips,
+          imgUri: https://via.placeholder.com/300x300/products/7a85a3ef-1683-63ac-25c5-1e5df9f2ded0.png,
+          price: 367.33,
+          description: Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support
+        },
+        {
+          id: 13,
+          name: Rustic Frozen Car,
+          imgUri: https://via.placeholder.com/300x300/products/1f0379aa-06a7-245c-aac7-f79e20012d7e.png,
+          price: 65.01,
+          description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+        },
+        {
+          id: 14,
+          name: Sleek Concrete Gloves,
+          imgUri: https://via.placeholder.com/300x300/products/b97829fe-b20a-8ae5-b242-33acf80c7663.png,
+          price: 805.96,
+          description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+        },
+        {
+          id: 15,
+          name: Refined Granite Chair,
+          imgUri: https://via.placeholder.com/300x300/products/dcd25b66-f0a3-6d27-84d8-1aa27adaa6ee.png,
+          price: 744.14,
+          description: Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support
+        },
+        {
+          id: 16,
+          name: Sleek Rubber Pizza,
+          imgUri: https://via.placeholder.com/300x300/products/2009736b-1107-b466-d126-eca7c31de62e.png,
+          price: 458.68,
+          description: null
+        },
+        {
+          id: 17,
+          name: Intelligent Rubber Soap,
+          imgUri: https://via.placeholder.com/300x300/products/9b925692-80bc-5daa-c2fb-42b1f05ed382.png,
+          price: 581.43,
+          description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+        },
+        {
+          id: 18,
+          name: Practical Steel Shoes,
+          imgUri: https://via.placeholder.com/300x300/products/8917d2b5-cd07-489a-bccf-f610e1b28e6c.png,
+          price: 325.54,
+          description: The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality
+        },
+        {
+          id: 19,
+          name: Gorgeous Frozen Pizza,
+          imgUri: https://via.placeholder.com/300x300/products/882d1165-8d5a-4c0d-3eef-539da0bf8333.png,
+          price: 495.14,
+          description: Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles
+        },
+        {
+          id: 20,
+          name: Awesome Granite Chips,
+          imgUri: https://via.placeholder.com/300x300/products/207ddfba-7cf3-20c2-c492-90c46d055c7f.png,
+          price: 431.7,
+          description: New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016
+        }
+      ]
+    }
+  }
+}
