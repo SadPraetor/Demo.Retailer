@@ -1,8 +1,4 @@
 ﻿namespace API.Models
 {
-	public class DescriptionDto
-	{
-
-		public string Description { get; set; }
-	}
+	public record DescriptionDto (string Description);
 }

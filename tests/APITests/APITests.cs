@@ -4,8 +4,12 @@ using API.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using VerifyTests;
 using VerifyXunit;
@@ -122,6 +126,119 @@ namespace Tests.APITests
 
 			Assert.True(apiResponseItem.Id == item.Id);
 			Assert.True(apiResponseItem.Description == item.Description);
+		}
+
+		[Fact]
+		public async Task PathDescriptionV1_ShouldUpdateItemDescription()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var originalItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+			var content = new StringContent("new description", Encoding.UTF8,MediaTypeNames.Application.Json);
+
+			var result = await client.PatchAsync("api/v1/products/25/description",content);
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			context.ChangeTracker.Clear();
+			var updatedItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == originalItem.Id);
+			Assert.False(apiResponseItem.Description == originalItem.Description);
+
+			Assert.True(apiResponseItem.Id == updatedItem.Id);
+			Assert.True(apiResponseItem.Description == updatedItem.Description);
+			Assert.True(apiResponseItem.Description == "new description");
+		}
+
+		[Fact]
+		public async Task PathDescriptionV2_ShouldUpdateItemDescription()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var originalItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+			var content = new StringContent("new description", Encoding.UTF8, MediaTypeNames.Application.Json);
+
+			var result = await client.PatchAsync("api/v1/products/25/description", content);
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			context.ChangeTracker.Clear();
+			var updatedItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == originalItem.Id);
+			Assert.False(apiResponseItem.Description == originalItem.Description);
+
+			Assert.True(apiResponseItem.Id == updatedItem.Id);
+			Assert.True(apiResponseItem.Description == updatedItem.Description);
+			Assert.True(apiResponseItem.Description == "new description");
+		}
+
+		[Fact]
+		public async Task PathDescriptionDtoV1_ShouldUpdateItemDescription()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var originalItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+
+			var result = await client.PatchAsJsonAsync("api/v1/products/25/", new DescriptionDto("new description by dto"));
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			context.ChangeTracker.Clear();
+			var updatedItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == originalItem.Id);
+			Assert.False(apiResponseItem.Description == originalItem.Description);
+
+			Assert.True(apiResponseItem.Id == updatedItem.Id);
+			Assert.True(apiResponseItem.Description == updatedItem.Description);
+			Assert.True(apiResponseItem.Description == "new description by dto");
+		}
+
+		[Fact]
+		public async Task PathDescriptionDtoV2_ShouldUpdateItemDescription()
+		{
+			var client = _fixture.CreateClient();
+			var context = CreateDbContext();
+
+			var originalItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+			var result = await client.PatchAsJsonAsync("api/v1/products/25/", new DescriptionDto("new description by dto"));
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			context.ChangeTracker.Clear();
+			var updatedItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
+
+
+			await Verifier.Verify(result);
+
+			var apiResponseItem = await result.Content.ReadFromJsonAsync<Product>();
+
+			Assert.True(apiResponseItem.Id == originalItem.Id);
+			Assert.False(apiResponseItem.Description == originalItem.Description);
+
+			Assert.True(apiResponseItem.Id == updatedItem.Id);
+			Assert.True(apiResponseItem.Description == updatedItem.Description);
+			Assert.True(apiResponseItem.Description == "new description by dto");
 		}
 	}
 }
