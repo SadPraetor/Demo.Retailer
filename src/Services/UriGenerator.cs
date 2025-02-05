@@ -1,6 +1,10 @@
 ﻿using API.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Collections.Generic;
+using System.Net.Http;
+
 
 namespace API.Services
 {
@@ -8,35 +12,29 @@ namespace API.Services
 	{
 		private static readonly string _pageQueryParameterName = nameof(Pagination.Page).ToLower();
 		private static readonly string _sizeQueryParameterName = nameof(Pagination.Size).ToLower();
+		private readonly LinkGenerator _linkGenerator;
+		
 
-		public Dictionary<LinkType, string> GeneratePaginationLinks<T>(IPaginatedResponseModel<T> paginationResponseModel, string path)
+		public UriGenerator(LinkGenerator linkGenerator)
 		{
+			_linkGenerator = linkGenerator;
+		}
 
-
-
-			//.net core 3.1, system.text.json does not support serializing of Ttype enum as dictionary key. Shame
-			//need to use ToString, with .net 5 Dictionary<LinkType,string> is good to be used
+		public Dictionary<LinkType, string> GeneratePaginationLinks<T>(IPaginatedResponseModel<T> paginationResponseModel,HttpContext httpContext)
+		{
+						
 			Dictionary<LinkType, string> resourceLinks = null;
-
+						
 			if (paginationResponseModel.TotalPages > paginationResponseModel.CurrentPage)
 			{
 				resourceLinks ??= new Dictionary<LinkType, string>();
-				resourceLinks[LinkType.Next] = QueryHelpers.AddQueryString(
-					path, new Dictionary<string, string>() {
-						{_sizeQueryParameterName, paginationResponseModel.PageSize.ToString() },
-						{ _pageQueryParameterName, (paginationResponseModel.CurrentPage + 1).ToString() }
-					});
-
+				resourceLinks[LinkType.Next] = _linkGenerator.GetUriByName(httpContext, "paginated_products", new { size = paginationResponseModel.PageSize ,page= paginationResponseModel.CurrentPage + 1,  });
 			}
 
 			if (paginationResponseModel.CurrentPage > 1)
 			{
-				resourceLinks ??= new Dictionary<LinkType, string>();
-				resourceLinks[LinkType.Prev] = QueryHelpers.AddQueryString(
-					path, new Dictionary<string, string>() {
-						{  _sizeQueryParameterName, paginationResponseModel.PageSize.ToString() },
-						{ _pageQueryParameterName, (paginationResponseModel.CurrentPage - 1).ToString() }
-					});
+				resourceLinks ??= new Dictionary<LinkType, string>();				
+				resourceLinks[LinkType.Prev] = _linkGenerator.GetUriByName(httpContext, "paginated_products", new { size = paginationResponseModel.PageSize, page = paginationResponseModel.CurrentPage - 1 });
 			}
 
 

@@ -12,7 +12,7 @@ Original version can be found on branches `original/master` and `original/reposi
 > - [X] Minimal API
 > - [ ] Response caching
 > - [X] Verify snapshot testing
-> - [ ] Implement route building adjusted for proxy scenario
+> - [X] Implement route building adjusted for proxy scenario
 > - [ ] OData demo endpoints
 > - [ ] GraphQL demo endpoints
 

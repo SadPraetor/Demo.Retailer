@@ -31,7 +31,8 @@ namespace API.Endpoints.Products
 
 			productsGroup.MapGet("/", GetProductsWithPagination)
 				.MapToApiVersion(new ApiVersion(2))
-				.WithTags("API");
+				.WithTags("API")
+				.WithName("paginated_products");
 
 			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
 			{
@@ -106,9 +107,7 @@ namespace API.Endpoints.Products
 					.OrderBy(x => x.Id)
 					.PaginateAsync<Product>(pagination.Page, pagination.Size, cancellationToken);
 
-				var path = new Uri(httpContext.Request.GetEncodedUrl()).GetLeftPart(UriPartial.Path).ToString();
-
-				paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel, path);
+				paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel,httpContext);
 
 				return TypedResults.Ok(paginatedModel);
 
