@@ -7,6 +7,7 @@ using API.Services;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +60,10 @@ builder.Services.AddDbContext<ProductsDbContext>(options =>
 builder.Services.AddScoped<IUriGenerator, UriGenerator>();
 builder.Services.AddExceptionHandler<FaultyPaginationQueryExceptionHandler>();
 builder.Services.AddProblemDetails();
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+	options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+});
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -81,6 +86,8 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 	await app.MigrateDatabaseAsync();
 	await app.SeedDatabaseIfEmptyAsync(3000);
 }
+
+app.UseForwardedHeaders();
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>

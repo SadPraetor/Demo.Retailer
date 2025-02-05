@@ -9,9 +9,12 @@ Original version can be found on branches `original/master` and `original/reposi
 > - Decided to completely disregard repository pattern
 
 > ### Current TODO list
-> - [ ] Minimal API
+> - [X] Minimal API
 > - [ ] Response caching
-> - [ ] Verify snapshot testing
+> - [X] Verify snapshot testing
+> - [ ] Implement route building adjusted for proxy scenario
+> - [ ] OData demo endpoints
+> - [ ] GraphQL demo endpoints
 
 
 

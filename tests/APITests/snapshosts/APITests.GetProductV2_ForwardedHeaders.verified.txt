@@ -1,0 +1,94 @@
+﻿{
+  Status: 200 OK,
+  Headers: {
+    api-deprecated-versions: 1,
+    api-supported-versions: 2
+  },
+  Content: {
+    Headers: {
+      Content-Type: application/json; charset=utf-8
+    },
+    Value: {
+      pageSize: 10,
+      currentPage: 3,
+      totalItems: 300,
+      totalPages: 30,
+      links: {
+        Next: https://www.myapi.com/api/v2/products?size=10&page=4,
+        Prev: https://www.myapi.com/api/v2/products?size=10&page=2
+      },
+      data: [
+        {
+          id: 21,
+          name: Intelligent Frozen Mouse,
+          imgUri: https://via.placeholder.com/300x300/products/ce1243bd-21e8-2e6c-b1ea-b1f2564d0a3a.png,
+          price: 890.24,
+          description: Carbonite web goalkeeper gloves are ergonomically designed to give easy fit
+        },
+        {
+          id: 22,
+          name: Small Granite Chicken,
+          imgUri: https://via.placeholder.com/300x300/products/7d52dc0d-fad6-b56a-3dcf-e2b322390e24.png,
+          price: 145.2,
+          description: The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality
+        },
+        {
+          id: 23,
+          name: Practical Steel Car,
+          imgUri: https://via.placeholder.com/300x300/products/0faf7a13-3874-ab73-e672-dcfc36357b6a.png,
+          price: 587.09,
+          description: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+        },
+        {
+          id: 24,
+          name: Practical Metal Car,
+          imgUri: https://via.placeholder.com/300x300/products/d12ba210-742b-e8fc-6a94-df67c8d7cec7.png,
+          price: 203.99,
+          description: null
+        },
+        {
+          id: 25,
+          name: Generic Fresh Mouse,
+          imgUri: https://via.placeholder.com/300x300/products/d80226d7-29a9-4156-d2e4-f9316a0ce3a2.png,
+          price: 139.99,
+          description: The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality
+        },
+        {
+          id: 26,
+          name: Unbranded Rubber Hat,
+          imgUri: https://via.placeholder.com/300x300/products/a36ccf1c-839b-91ec-ba1a-f9a1cb04ce53.png,
+          price: 893.91,
+          description: Carbonite web goalkeeper gloves are ergonomically designed to give easy fit
+        },
+        {
+          id: 27,
+          name: Tasty Rubber Sausages,
+          imgUri: https://via.placeholder.com/300x300/products/c26d976d-e3e3-4326-e4ea-668e09336b05.png,
+          price: 344.37,
+          description: Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles
+        },
+        {
+          id: 28,
+          name: Unbranded Plastic Shirt,
+          imgUri: https://via.placeholder.com/300x300/products/df40c938-b8d4-db32-6cdf-862161d536d8.png,
+          price: 414.21,
+          description: New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart
+        },
+        {
+          id: 29,
+          name: Handcrafted Frozen Bike,
+          imgUri: https://via.placeholder.com/300x300/products/9bfb3d3a-c6e7-be44-d380-d08e5fa38204.png,
+          price: 954.32,
+          description: New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016
+        },
+        {
+          id: 30,
+          name: Ergonomic Frozen Chair,
+          imgUri: https://via.placeholder.com/300x300/products/96d1e707-b5ce-4c34-d5b3-a9298f03e339.png,
+          price: 386.98,
+          description: Carbonite web goalkeeper gloves are ergonomically designed to give easy fit
+        }
+      ]
+    }
+  }
+}

@@ -264,5 +264,23 @@ namespace Tests.APITests
 
 			await Verifier.Verify(result);
 		}
+
+		[Fact]
+		public async Task GetProductV2_ForwardedHeaders()
+		{
+			var client = _fixture.CreateClient();
+
+			var message = new HttpRequestMessage(HttpMethod.Get, "api/v2/products?page=3&size=10");
+			message.Headers.Add("X-Forwarded-Host", "www.myapi.com");
+			message.Headers.Add("X-Forwarded-Proto", "https");
+
+			var result = await client.SendAsync(message);
+
+			
+
+			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
+
+			await Verifier.Verify(result);
+		}
 	}
 }
