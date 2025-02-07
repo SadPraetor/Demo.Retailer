@@ -41,6 +41,10 @@ builder.Services
 		{
 			builder.AddPolicy<CachePolicyTagId>();
 		});
+		options.AddPolicy(CachePolicies.query, builder =>
+		{
+			builder.AddPolicy<CachePolicyQueryTagId>();
+		});
 	});
 
 

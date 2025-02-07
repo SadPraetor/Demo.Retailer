@@ -4,6 +4,7 @@ namespace API.Infrastructure
 {
 	public class CachePolicies
 	{
-		public const string id = "query";
+		public const string id = "id";
+		public const string query = "query";
 	}
 }

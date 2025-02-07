@@ -35,7 +35,8 @@ namespace API.Endpoints.Products
 			productsGroup.MapGet("/", GetProductsWithPagination)
 				.MapToApiVersion(new ApiVersion(2))
 				.WithTags("API")
-				.WithName("paginated_products");
+				.WithName("paginated_products")
+				.CacheOutput(CachePolicies.query);
 
 			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
 			{
@@ -118,6 +119,9 @@ namespace API.Endpoints.Products
 					.PaginateAsync<Product>(pagination.Page, pagination.Size, cancellationToken);
 
 				paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel,httpContext);
+
+				var tags = paginatedModel.Data.Select(x => $"tag-id-{x.Id}").ToArray();
+				httpContext.Items.Add("cache-tag-ids", tags);
 
 				return TypedResults.Ok(paginatedModel);
 
