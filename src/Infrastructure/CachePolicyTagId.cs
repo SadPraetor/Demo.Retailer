@@ -23,6 +23,8 @@ namespace API.Infrastructure
 			context.AllowLocking = true;
 			context.CacheVaryByRules.RouteValueNames = "id";
 
+			
+
 			return ValueTask.CompletedTask;
 		}
 

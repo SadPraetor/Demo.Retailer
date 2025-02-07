@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,9 +61,12 @@ namespace API.Endpoints.Products
 				int id,
 				PatchProductDto dto,
 				ProductsDbContext context,
+				IOutputCacheStore cache,
 				CancellationToken cancellationToken) =>
 				{
-					return await UpdateDescriptionAsync(id, dto.Description, context, cancellationToken);
+					var result = await UpdateDescriptionAsync(id, dto.Description, context, cancellationToken);
+					await cache.EvictByTagAsync($"tag-id-{id}", cancellationToken);
+					return result;
 				})
 				.Accepts<string>("application/json");
 
@@ -70,12 +74,15 @@ namespace API.Endpoints.Products
 				int id,
 				HttpRequest request,
 				ProductsDbContext context,
+				IOutputCacheStore cache,
 				CancellationToken cancellationToken) =>
 			{
 				using var reader = new StreamReader(request.Body);
 				var newDescription = await reader.ReadToEndAsync();
 
-				return await UpdateDescriptionAsync(id, newDescription, context, cancellationToken);
+				var result = await UpdateDescriptionAsync(id, newDescription, context, cancellationToken);
+				await cache.EvictByTagAsync($"tag-id-{id}", cancellationToken);
+				return result;
 			})
 				.Accepts<string>("application/json");
 
