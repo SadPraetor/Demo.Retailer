@@ -1,4 +1,5 @@
 ﻿using API.DataAccess;
+using API.Infrastructure;
 using API.Models;
 using API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -49,7 +51,8 @@ namespace API.Endpoints.Products
 				}
 
 				return TypedResults.Ok(product);
-			});
+			})
+				.CacheOutput(CachePolicies.id);
 
 
 

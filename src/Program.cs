@@ -25,15 +25,23 @@ builder.Services.AddDbContext<ProductsDbContext>(options =>
 			);
 
 builder.Services.AddScoped<IUriGenerator, UriGenerator>();
-builder.Services.AddExceptionHandler<FaultyPaginationQueryExceptionHandler>();
-builder.Services.AddProblemDetails();
 
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-	options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
-});
+builder.Services
+	.AddExceptionHandler<FaultyPaginationQueryExceptionHandler>()
+	.AddProblemDetails()
+	.Configure<ForwardedHeadersOptions>(options =>
+	{
+		options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+	});
 
-
+builder.Services
+	.AddOutputCache(options=>
+	{
+		options.AddPolicy(CachePolicies.id, builder =>
+		{
+			builder.AddPolicy<CachePolicyTagId>();
+		});
+	});
 
 
 var app = builder.Build();
@@ -45,6 +53,8 @@ if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments
 }
 
 app.UseForwardedHeaders();
+app.UseHttpsRedirection();
+app.UseOutputCache();
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>

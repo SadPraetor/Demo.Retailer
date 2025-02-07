@@ -1,0 +1,9 @@
+﻿using System.Linq;
+
+namespace API.Infrastructure
+{
+	public class CachePolicies
+	{
+		public const string id = "query";
+	}
+}
