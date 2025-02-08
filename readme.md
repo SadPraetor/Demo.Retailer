@@ -10,11 +10,19 @@ Original version can be found on branches `original/master` and `original/reposi
 
 > ### Current TODO list
 > - [X] Minimal API
-> - [ ] Response caching
+> - [X] Response caching
 > - [X] Verify snapshot testing
 > - [X] Implement route building adjusted for proxy scenario
 > - [ ] OData demo endpoints
 > - [ ] GraphQL demo endpoints
+> - [ ] OneOf pattern to remove throwing exceptions (performance)
+> - [ ] Cleanup tests
+> - [ ] Aspire implementation
+> - [ ] Grafana, Loki, Prometheus stack
+> - [ ] Logs, open telemetry, metrics
+> - [ ] K6 load test
+> - [ ] reverse proxy, horizontal scaling
+> - [ ] distrubuted response caching
 
 
 
