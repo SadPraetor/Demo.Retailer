@@ -16,6 +16,8 @@ using ApiVersion = Asp.Versioning.ApiVersion;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Services
 	.AddProjectApiVersions()
 	.RegisterOpenApi();
@@ -49,6 +51,8 @@ builder.Services
 
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
 {

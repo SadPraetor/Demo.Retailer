@@ -13,15 +13,21 @@ Original version can be found on branches `original/master` and `original/reposi
 > - [X] Response caching
 > - [X] Verify snapshot testing
 > - [X] Implement route building adjusted for proxy scenario
+> - [X] Cleanup tests
+
+> - [ ] Aspire implementation
+> - [ ] Postgres
+> - [ ] Expand data model
+> - [ ] Migration project
+> - [ ] Image deploy to container
+> - [ ] reverse proxy, horizontal scaling
+> - [ ] Grafana, Loki, Prometheus stack
 > - [ ] OData demo endpoints
+> - [ ] expand tests
+> - [ ] Logs, open telemetry, metrics
 > - [ ] GraphQL demo endpoints
 > - [ ] OneOf pattern to remove throwing exceptions (performance)
-> - [ ] Cleanup tests
-> - [ ] Aspire implementation
-> - [ ] Grafana, Loki, Prometheus stack
-> - [ ] Logs, open telemetry, metrics
 > - [ ] K6 load test
-> - [ ] reverse proxy, horizontal scaling
 > - [ ] distrubuted response caching
 
 
