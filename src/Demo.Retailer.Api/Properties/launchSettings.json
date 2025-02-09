@@ -19,7 +19,7 @@
     },
     "RetailerInterviewAPITask": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "scalar/v2",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
