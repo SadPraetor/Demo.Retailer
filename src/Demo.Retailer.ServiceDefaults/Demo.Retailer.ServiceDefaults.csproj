@@ -7,6 +7,16 @@
     <IsAspireSharedProject>true</IsAspireSharedProject>
   </PropertyGroup>
 
+<PropertyGroup>
+	<!-- Base output folder -->
+	<BaseOutputPath>$(SolutionDir)bin\</BaseOutputPath>
+	<!-- Base intermediate (obj) folder -->
+	<BaseIntermediateOutputPath>$(SolutionDir)obj\</BaseIntermediateOutputPath>
+	<!-- Optional: Customize full output paths -->
+	<OutputPath>$(BaseOutputPath)$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+	<IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+</PropertyGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
 
