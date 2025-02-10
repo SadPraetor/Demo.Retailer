@@ -21,7 +21,7 @@ public class Worker : BackgroundService
 
 			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
 			{
-				
+
 			}
 		}
 	}

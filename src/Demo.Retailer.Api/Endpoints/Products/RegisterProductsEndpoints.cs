@@ -1,7 +1,6 @@
 ﻿using Demo.Retailer.Api.Infrastructure;
 using Demo.Retailer.Api.Models;
 using Demo.Retailer.Api.Services;
-using Demo.Retailer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;

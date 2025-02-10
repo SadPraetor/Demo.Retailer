@@ -2,7 +2,6 @@ using Demo.Retailer.Api.Endpoints.Products;
 using Demo.Retailer.Api.ExceptionHandlers;
 using Demo.Retailer.Api.Infrastructure;
 using Demo.Retailer.Api.Services;
-using Demo.Retailer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
-using System;
 using ApiVersion = Asp.Versioning.ApiVersion;
 
 var builder = WebApplication.CreateBuilder(args);
