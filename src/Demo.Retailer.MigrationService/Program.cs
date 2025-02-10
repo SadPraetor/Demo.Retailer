@@ -1,4 +1,4 @@
-using Demo.Retailer.Data;
+global using Demo.Retailer.Data;
 using Demo.Retailer.MigrationService;
 
 var builder = Host.CreateApplicationBuilder(args);

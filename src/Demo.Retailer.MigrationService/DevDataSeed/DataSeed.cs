@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace Demo.Retailer.Data.DataSeed
+﻿namespace Demo.Retailer.MigrationService
 {
 	public static class DataSeed
 	{

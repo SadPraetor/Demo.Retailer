@@ -1,6 +1,6 @@
 ﻿using Demo.Retailer.Api.Models;
 using Demo.Retailer.Data;
-using Demo.Retailer.Data.DataSeed;
+using Demo.Retailer.MigrationService;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;

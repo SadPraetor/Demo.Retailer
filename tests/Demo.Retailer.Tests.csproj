@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Demo.Retailer.Api\Demo.Retailer.Api.csproj" />
+    <ProjectReference Include="..\src\Demo.Retailer.MigrationService\Demo.Retailer.MigrationService.csproj" />
   </ItemGroup>
 
 </Project>

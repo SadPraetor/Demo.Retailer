@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-namespace Demo.Retailer.Data.DataSeed
+namespace Demo.Retailer.MigrationService
 {
 	public class ProductFaker
 	{
