@@ -1,11 +1,10 @@
-﻿using Demo.Retailer.Api.DataAccess;
-using Demo.Retailer.Api.DevDataSeed;
-using Demo.Retailer.Api.Models;
+﻿using Demo.Retailer.Api.Models;
+using Demo.Retailer.Data;
+using Demo.Retailer.Data.DataSeed;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Net.Mime;
 using System.Runtime.CompilerServices;
@@ -34,13 +33,13 @@ namespace Tests.APITests
 		protected readonly APITestsFixture _fixture;
 		private readonly ITestOutputHelper _output;
 		private readonly ProductsDbContext _dbContext;
-		
+
 		protected SqlConnection GetSqlConnection() => _fixture.GetConnection();
 		protected ProductsDbContext CreateDbContext() => new ProductsDbContext(new DbContextOptionsBuilder<ProductsDbContext>()
 			.UseSqlServer(_fixture.GetConnection())
 			.LogTo(_output.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information).Options);
 
-		public APITests( APITestsFixture fixture, ITestOutputHelper output)
+		public APITests(APITestsFixture fixture, ITestOutputHelper output)
 		{
 			_fixture = fixture;
 			_output = output;
@@ -57,7 +56,7 @@ namespace Tests.APITests
 
 		}
 
-		
+
 
 		public void Dispose()
 		{
@@ -136,9 +135,9 @@ namespace Tests.APITests
 
 			var originalItem = await context.Products.FirstOrDefaultAsync(product => product.Id == 25);
 
-			var content = new StringContent("new description", Encoding.UTF8,MediaTypeNames.Application.Json);
+			var content = new StringContent("new description", Encoding.UTF8, MediaTypeNames.Application.Json);
 
-			var result = await client.PatchAsync("api/v1/products/25/description",content);
+			var result = await client.PatchAsync("api/v1/products/25/description", content);
 			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
 
 			context.ChangeTracker.Clear();
@@ -276,7 +275,7 @@ namespace Tests.APITests
 
 			var result = await client.SendAsync(message);
 
-			
+
 
 			Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK);
 

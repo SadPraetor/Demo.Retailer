@@ -1,4 +1,4 @@
-﻿using Demo.Retailer.Api.DataAccess;
+﻿using Demo.Retailer.Data;
 using DotNet.Testcontainers.Builders;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -69,7 +69,7 @@ namespace Tests.APITests
 				services.Remove(dbConnectionDescriptor);
 
 				services.AddDbContext<ProductsDbContext>((container, options) =>
-				{			
+				{
 					options.UseSqlServer(GetConnectionString());
 				});
 			});

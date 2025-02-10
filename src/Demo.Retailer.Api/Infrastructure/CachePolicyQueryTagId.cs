@@ -26,7 +26,7 @@ namespace Demo.Retailer.Api.Infrastructure
 			if (context.HttpContext.Items.TryGetValue("cache-tag-ids", out var obj) && obj is string[] tags)
 			{
 				// Assign these tags to the cache metadata.
-				foreach(var tag in tags)
+				foreach (var tag in tags)
 				{
 					context.Tags.Add(tag);
 				}

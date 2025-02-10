@@ -1,9 +1,6 @@
-﻿using Demo.Retailer.Api.Models;
-using Bogus;
-using System;
-using System.Collections.Generic;
+﻿using Bogus;
 
-namespace Demo.Retailer.Api.DevDataSeed
+namespace Demo.Retailer.Data.DataSeed
 {
 	public class ProductFaker
 	{

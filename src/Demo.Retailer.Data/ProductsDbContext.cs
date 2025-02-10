@@ -1,7 +1,7 @@
-﻿using Demo.Retailer.Api.Models;
+﻿
 using Microsoft.EntityFrameworkCore;
 
-namespace Demo.Retailer.Api.DataAccess
+namespace Demo.Retailer.Data
 {
 	public class ProductsDbContext : DbContext
 	{

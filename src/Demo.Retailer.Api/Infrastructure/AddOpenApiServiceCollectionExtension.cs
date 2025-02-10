@@ -40,7 +40,7 @@ namespace Demo.Retailer.Api.Infrastructure
 					return Task.CompletedTask;
 				});
 			});
-			
+
 			return services;
 		}
 	}

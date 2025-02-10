@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Demo.Retailer.Api.Infrastructure
+﻿namespace Demo.Retailer.Api.Infrastructure
 {
 	public class CachePolicies
 	{

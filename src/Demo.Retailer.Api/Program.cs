@@ -1,9 +1,8 @@
-using Demo.Retailer.Api.DataAccess;
-using Demo.Retailer.Api.DevDataSeed;
 using Demo.Retailer.Api.Endpoints.Products;
 using Demo.Retailer.Api.ExceptionHandlers;
 using Demo.Retailer.Api.Infrastructure;
 using Demo.Retailer.Api.Services;
+using Demo.Retailer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +36,7 @@ builder.Services
 	});
 
 builder.Services
-	.AddOutputCache(options=>
+	.AddOutputCache(options =>
 	{
 		options.AddPolicy(CachePolicies.id, builder =>
 		{
@@ -54,11 +53,7 @@ var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
-{
-	await app.MigrateDatabaseAsync();
-	await app.SeedDatabaseIfEmptyAsync(3000);
-}
+
 
 app.UseForwardedHeaders();
 app.UseHttpsRedirection();

@@ -1,10 +1,7 @@
-﻿using Demo.Retailer.Api.DataAccess;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Demo.Retailer.Api.DevDataSeed
+namespace Demo.Retailer.Data.DataSeed
 {
 	public static class DataSeed
 	{

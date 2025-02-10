@@ -3,8 +3,7 @@
   <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <OutputType>Exe</OutputType>    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsAspireHost>true</IsAspireHost>
@@ -15,15 +14,6 @@
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
   </ItemGroup>
 
-	<PropertyGroup>
-		<!-- Base output folder -->
-		<BaseOutputPath>$(SolutionDir)bin\</BaseOutputPath>
-		<!-- Base intermediate (obj) folder -->
-		<BaseIntermediateOutputPath>$(SolutionDir)obj\</BaseIntermediateOutputPath>
-		<!-- Optional: Customize full output paths -->
-		<OutputPath>$(BaseOutputPath)$(Configuration)\$(MSBuildProjectName)\</OutputPath>
-		<IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>		
-	</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Demo.Retailer.Api\Demo.Retailer.Api.csproj" />

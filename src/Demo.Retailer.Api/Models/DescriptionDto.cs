@@ -1,4 +1,4 @@
 ﻿namespace Demo.Retailer.Api.Models
 {
-	public record DescriptionDto (string Description);
+	public record DescriptionDto(string Description);
 }

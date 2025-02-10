@@ -1,22 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net9</TargetFramework>
-  </PropertyGroup>
-
+  
 	
-  <PropertyGroup>
-    <!-- Base output folder -->
-    <BaseOutputPath>$(SolutionDir)bin\</BaseOutputPath>
-    <!-- Base intermediate (obj) folder -->
-    <BaseIntermediateOutputPath>$(SolutionDir)obj\</BaseIntermediateOutputPath>
-    <!-- Optional: Customize full output paths -->
-    <OutputPath>$(BaseOutputPath)$(Configuration)\$(MSBuildProjectName)\</OutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+  <PropertyGroup>	
     <DocumentationFile>Demo.Retailer.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-	
+
 
 
   <ItemGroup>
@@ -34,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Demo.Retailer.Data\Demo.Retailer.Data.csproj" />
     <ProjectReference Include="..\Demo.Retailer.ServiceDefaults\Demo.Retailer.ServiceDefaults.csproj" />
   </ItemGroup>
 

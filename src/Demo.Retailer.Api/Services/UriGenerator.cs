@@ -11,27 +11,27 @@ namespace Demo.Retailer.Api.Services
 		private static readonly string _pageQueryParameterName = nameof(Pagination.Page).ToLower();
 		private static readonly string _sizeQueryParameterName = nameof(Pagination.Size).ToLower();
 		private readonly LinkGenerator _linkGenerator;
-		
+
 
 		public UriGenerator(LinkGenerator linkGenerator)
 		{
 			_linkGenerator = linkGenerator;
 		}
 
-		public Dictionary<LinkType, string> GeneratePaginationLinks<T>(IPaginatedResponseModel<T> paginationResponseModel,HttpContext httpContext)
+		public Dictionary<LinkType, string> GeneratePaginationLinks<T>(IPaginatedResponseModel<T> paginationResponseModel, HttpContext httpContext)
 		{
-						
+
 			Dictionary<LinkType, string> resourceLinks = null;
-						
+
 			if (paginationResponseModel.TotalPages > paginationResponseModel.CurrentPage)
 			{
 				resourceLinks ??= new Dictionary<LinkType, string>();
-				resourceLinks[LinkType.Next] = _linkGenerator.GetUriByName(httpContext, "paginated_products", new { size = paginationResponseModel.PageSize ,page= paginationResponseModel.CurrentPage + 1,  });
+				resourceLinks[LinkType.Next] = _linkGenerator.GetUriByName(httpContext, "paginated_products", new { size = paginationResponseModel.PageSize, page = paginationResponseModel.CurrentPage + 1, });
 			}
 
 			if (paginationResponseModel.CurrentPage > 1)
 			{
-				resourceLinks ??= new Dictionary<LinkType, string>();				
+				resourceLinks ??= new Dictionary<LinkType, string>();
 				resourceLinks[LinkType.Prev] = _linkGenerator.GetUriByName(httpContext, "paginated_products", new { size = paginationResponseModel.PageSize, page = paginationResponseModel.CurrentPage - 1 });
 			}
 

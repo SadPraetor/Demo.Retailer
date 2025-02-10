@@ -1,7 +1,7 @@
-﻿using Demo.Retailer.Api.DataAccess;
-using Demo.Retailer.Api.Infrastructure;
+﻿using Demo.Retailer.Api.Infrastructure;
 using Demo.Retailer.Api.Models;
 using Demo.Retailer.Api.Services;
+using Demo.Retailer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -117,7 +117,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 					.OrderBy(x => x.Id)
 					.PaginateAsync<Product>(pagination.Page, pagination.Size, cancellationToken);
 
-				paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel,httpContext);
+				paginatedModel.Links = uriGenerator.GeneratePaginationLinks<Product>(paginatedModel, httpContext);
 
 				var tags = paginatedModel.Data.Select(x => $"tag-id-{x.Id}").ToArray();
 				httpContext.Items.Add("cache-tag-ids", tags);

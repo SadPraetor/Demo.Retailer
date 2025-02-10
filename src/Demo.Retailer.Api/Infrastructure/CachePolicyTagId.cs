@@ -10,7 +10,7 @@ namespace Demo.Retailer.Api.Infrastructure
 		{
 			var id = context.HttpContext.Request.RouteValues["id"];
 
-			if(id is null)
+			if (id is null)
 			{
 				return ValueTask.CompletedTask;
 			}
@@ -23,7 +23,7 @@ namespace Demo.Retailer.Api.Infrastructure
 			context.AllowLocking = true;
 			context.CacheVaryByRules.RouteValueNames = "id";
 
-			
+
 
 			return ValueTask.CompletedTask;
 		}

@@ -1,11 +1,8 @@
-﻿using Demo.Retailer.Api.DataAccess;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading.Tasks;
 
-namespace Demo.Retailer.Api.DevDataSeed
+namespace Demo.Retailer.Data.DataSeed
 {
 	public static class MigrationManager
 	{
