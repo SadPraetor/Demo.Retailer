@@ -7,7 +7,7 @@
 
 			await using (var scope = host.Services.CreateAsyncScope())
 			{
-				using (var productsDbContext = scope.ServiceProvider.GetRequiredService<ProductsDbContext>())
+				using (var productsDbContext = scope.ServiceProvider.GetRequiredService<StoreDbContext>())
 				{
 					if (productsDbContext.Products.Any())
 					{

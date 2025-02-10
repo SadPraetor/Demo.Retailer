@@ -32,10 +32,10 @@ namespace Tests.APITests
 	{
 		protected readonly APITestsFixture _fixture;
 		private readonly ITestOutputHelper _output;
-		private readonly ProductsDbContext _dbContext;
+		private readonly StoreDbContext _dbContext;
 
 		protected SqlConnection GetSqlConnection() => _fixture.GetConnection();
-		protected ProductsDbContext CreateDbContext() => new ProductsDbContext(new DbContextOptionsBuilder<ProductsDbContext>()
+		protected StoreDbContext CreateDbContext() => new StoreDbContext(new DbContextOptionsBuilder<StoreDbContext>()
 			.UseSqlServer(_fixture.GetConnection())
 			.LogTo(_output.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information).Options);
 
@@ -43,7 +43,7 @@ namespace Tests.APITests
 		{
 			_fixture = fixture;
 			_output = output;
-			_dbContext = new ProductsDbContext(new DbContextOptionsBuilder<ProductsDbContext>()
+			_dbContext = new StoreDbContext(new DbContextOptionsBuilder<StoreDbContext>()
 			.UseSqlServer(_fixture.GetConnection())
 				.Options);
 

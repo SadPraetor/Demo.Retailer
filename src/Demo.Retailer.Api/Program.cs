@@ -19,7 +19,7 @@ builder.Services
 	.AddProjectApiVersions()
 	.RegisterOpenApi();
 
-builder.Services.AddDbContext<ProductsDbContext>(options =>
+builder.Services.AddDbContext<StoreDbContext>(options =>
 				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))
 			);
 

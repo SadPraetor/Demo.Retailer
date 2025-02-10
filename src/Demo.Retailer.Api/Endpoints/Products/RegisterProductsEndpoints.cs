@@ -23,7 +23,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 	{
 		public static RouteGroupBuilder RegisterProductsAPIEndpoints(this RouteGroupBuilder productsGroup)
 		{
-			productsGroup.MapGet("/", async (ProductsDbContext context, CancellationToken cancellationToken) =>
+			productsGroup.MapGet("/", async (StoreDbContext context, CancellationToken cancellationToken) =>
 			{
 				return TypedResults.Ok(await context.Products.AsNoTracking().ToListAsync(cancellationToken));
 			})
@@ -36,7 +36,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 				.WithName("paginated_products")
 				.CacheOutput(CachePolicies.query);
 
-			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, ProductsDbContext context, CancellationToken cancellationToken) =>
+			productsGroup.MapGet("/{id:int:min(1)}", async Task<Results<Ok<Product>, NotFound<ProblemDetails>>> (int id, StoreDbContext context, CancellationToken cancellationToken) =>
 			{
 				var product = await context.Products.FindAsync(new object[] { id }, cancellationToken);
 
@@ -59,7 +59,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 			productsGroup.MapPatch("/{id:int:min(1)}", async (
 				int id,
 				PatchProductDto dto,
-				ProductsDbContext context,
+				StoreDbContext context,
 				IOutputCacheStore cache,
 				CancellationToken cancellationToken) =>
 				{
@@ -72,7 +72,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 			productsGroup.MapPatch("/{id:int:min(1)}/description", async (
 				int id,
 				HttpRequest request,
-				ProductsDbContext context,
+				StoreDbContext context,
 				IOutputCacheStore cache,
 				CancellationToken cancellationToken) =>
 			{
@@ -93,7 +93,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 
 		static async Task<Results<Ok<PaginatedResponseModel<Product>>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>, InternalServerError<ProblemDetails>>> GetProductsWithPagination(
 			Pagination pagination,
-			ProductsDbContext context,
+			StoreDbContext context,
 			HttpContext httpContext,
 			[FromServices] IUriGenerator uriGenerator,
 			CancellationToken cancellationToken)
@@ -155,7 +155,7 @@ namespace Demo.Retailer.Api.Endpoints.Products
 		private static async Task<Results<Ok<Product>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>>> UpdateDescriptionAsync(
 			int id,
 			string newDescription,
-			ProductsDbContext context,
+			StoreDbContext context,
 			CancellationToken cancellationToken)
 		{
 			if (newDescription.Length > _descriptionLengthLimit)

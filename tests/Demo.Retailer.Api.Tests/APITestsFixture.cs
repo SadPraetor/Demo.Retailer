@@ -58,7 +58,7 @@ namespace Tests.APITests
 			{
 				var dbContextDescriptor = services.SingleOrDefault(
 					d => d.ServiceType ==
-						typeof(DbContextOptions<ProductsDbContext>));
+						typeof(DbContextOptions<StoreDbContext>));
 
 				services.Remove(dbContextDescriptor);
 
@@ -68,7 +68,7 @@ namespace Tests.APITests
 
 				services.Remove(dbConnectionDescriptor);
 
-				services.AddDbContext<ProductsDbContext>((container, options) =>
+				services.AddDbContext<StoreDbContext>((container, options) =>
 				{
 					options.UseSqlServer(GetConnectionString());
 				});
