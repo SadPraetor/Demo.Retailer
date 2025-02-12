@@ -9,6 +9,8 @@ namespace Demo.Retailer.Data.Models
 		{
 			builder.ToTable(nameof(StoreDbContext.LineItems));
 
+			builder.HasIndex(lineItem => lineItem.OrderId);
+
 			builder.HasOne(lineItem => lineItem.Product)
 				.WithMany()
 				.HasForeignKey(lineItem => lineItem.ProductId)

@@ -1,0 +1,18 @@
+
+<Project>
+	<!--<Import Condition="Exists('$(SolutionDir)obj\$(MSBuildProjectName)\$(MSBuildProjectFile).EntityFrameworkCore.targets')"
+            Project="$(SolutionDir)obj\$(MSBuildProjectName)\$(MSBuildProjectFile).EntityFrameworkCore.targets"/>-->
+<PropertyGroup>
+	
+	<TargetFramework>net9.0</TargetFramework>
+	<!--<UseCommonIntermediateOutputPath>true</UseCommonIntermediateOutputPath>-->
+    <!-- Base output folder -->
+    <!--<BaseOutputPath>$(SolutionDir)bin\</BaseOutputPath>
+    --><!-- Base intermediate (obj) folder --><!--
+    <BaseIntermediateOutputPath>$(SolutionDir)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    --><!-- Optional: Customize full output paths --><!--
+    <OutputPath>$(BaseOutputPath)$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>-->
+    
+  </PropertyGroup>
+</Project>

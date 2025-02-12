@@ -9,8 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.Tests", "test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54461025-311F-4BD3-BA74-C5FFF83E696A}"
 	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
 		readme.md = readme.md
+		Directoryxyz.Build.props = Directoryxyz.Build.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.AppHost", "src\Demo.Retailer.AppHost\Demo.Retailer.AppHost.csproj", "{5B6E2AF2-91DF-4601-940D-A85071BEAB88}"

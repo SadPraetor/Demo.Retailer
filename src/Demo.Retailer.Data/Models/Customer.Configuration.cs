@@ -17,7 +17,13 @@ namespace Demo.Retailer.Data.Models
 				.HasMaxLength(256);
 
 			builder.Property(x => x.LastName)
-				.HasMaxLength(256);				
+				.HasMaxLength(256);
+
+			builder.HasMany(x => x.Orders)
+				.WithOne(order => order.Customer)
+				.HasPrincipalKey(customer => customer.Id)
+				.HasForeignKey(order => order.CustomerId)
+				.OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
-	<PropertyGroup>		
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>dotnet-Demo.Retailer.MigrationService-4378943a-f6a8-4747-bdf3-365805c52e1b</UserSecretsId>

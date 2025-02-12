@@ -1,7 +1,7 @@
 ﻿namespace Demo.Retailer.Data
 {
-    public class Customer
-    {
+	public class Customer
+	{
 		public int Id { get; set; }
 
 		public string FirstName { get; set; } = default!;

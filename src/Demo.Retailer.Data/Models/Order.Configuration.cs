@@ -11,7 +11,9 @@ namespace Demo.Retailer.Data
 
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id)
-				.UseIdentityColumn(1, 1);				
+				.UseIdentityColumn(1, 1);
+
+			builder.HasIndex(order => order.CustomerId);
 
 			builder.Property(x => x.CreatedDate)
 				.HasDefaultValueSql("GetUtcDate()")
