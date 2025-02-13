@@ -4,7 +4,7 @@ using Demo.Retailer.MigrationService;
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();
 
-builder.AddSqlServerDbContext<StoreDbContext>("ValuesChangedMonitoring");
+builder.AddSqlServerDbContext<StoreDbContext>("DemoRetailer");
 
 
 var host = builder.Build();

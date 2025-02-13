@@ -1,28 +1,34 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Demo.Retailer.MigrationService;
 
 public class Worker : BackgroundService
 {
+	private readonly IServiceScopeFactory _scopeFactory;
+	private readonly IHostApplicationLifetime _hostApplication;
 	private readonly ILogger<Worker> _logger;
 
-	public Worker(ILogger<Worker> logger)
+	public Worker(IServiceScopeFactory scopeFactory,
+		IHostApplicationLifetime hostApplication,
+		ILogger<Worker> logger)
 	{
+		_scopeFactory = scopeFactory;
+		_hostApplication = hostApplication;
 		_logger = logger;
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		while (!stoppingToken.IsCancellationRequested)
+		_logger.LogInformation("Migration Worker running at: {time}", DateTimeOffset.Now);
+		using var scope = _scopeFactory.CreateScope();
+		var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
+
+		if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
 		{
-			if (_logger.IsEnabled(LogLevel.Information))
-			{
-				_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-			}
-			await Task.Delay(1000, stoppingToken);
-
-			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
-			{
-
-			}
+			await context.Database.MigrateAsync();
+			_logger.LogInformation("Migration applied");
 		}
+
+		_hostApplication.StopApplication();
 	}
 }
