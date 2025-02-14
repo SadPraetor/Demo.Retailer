@@ -28,7 +28,7 @@ public class Worker : BackgroundService
 			await context.Database.MigrateAsync();
 			_logger.LogInformation("Migration applied");
 
-			var migrationManager = new MigrationManager();
+			
 
 		}
 		else
