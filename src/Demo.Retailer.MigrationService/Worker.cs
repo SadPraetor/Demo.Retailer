@@ -19,14 +19,21 @@ public class Worker : BackgroundService
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		_logger.LogInformation("Migration Worker running at: {time}", DateTimeOffset.Now);
-		using var scope = _scopeFactory.CreateScope();
-		var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
-
 		if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
 		{
+			_logger.LogInformation("Migration Worker running at: {time}", DateTimeOffset.UtcNow);
+			using var scope = _scopeFactory.CreateScope();
+			var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
+
 			await context.Database.MigrateAsync();
 			_logger.LogInformation("Migration applied");
+
+			var migrationManager = new MigrationManager();
+
+		}
+		else
+		{
+			_logger.LogInformation("Non Development environment, skipping migration");
 		}
 
 		_hostApplication.StopApplication();
