@@ -4,7 +4,7 @@ namespace Demo.Retailer.MigrationService.DevDataSeed
 {
 	public class CustomerFaker
 	{
-		private Faker<Customer> _faker;
+		private readonly Faker<Customer> _faker;
 		public CustomerFaker(int useSeed = 999)
 		{
 			_faker = new Faker<Customer>().UseSeed(useSeed)

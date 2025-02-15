@@ -4,15 +4,11 @@ namespace Demo.Retailer.MigrationService.DevDataSeed
 {
 	public class OrderFaker
 	{
-		private Faker<Order> _faker;
+		private readonly Faker<Order> _faker;
 		public OrderFaker(int useSeed = 999)
 		{
-			_faker = new Faker<Order>().UseSeed(useSeed)
-				.RuleFor(o => o.CustomerId, _delegateMethod);
+			_faker = new Faker<Order>().UseSeed(useSeed);
 		}
-
-		
-		Func<Faker, int>? _delegateMethod;
 
 		public List<Order> GetFakeOrders(IEnumerable<int> customerIds, int count = 1)
 		{
@@ -22,7 +18,7 @@ namespace Demo.Retailer.MigrationService.DevDataSeed
 			{
 				throw new InvalidOperationException("Customer ids list is empty");
 			}
-			_delegateMethod = (Faker faker) => faker.PickRandom(customerIds);
+			_faker.RuleFor(order => order.CustomerId, f => f.PickRandom<int>(customerIds));
 			return _faker.Generate(count);
 			
 		}

@@ -3,7 +3,7 @@
 	public enum SeedSize
 	{
 		Small,
-		MidSize,
+		Medium,
 		Large,
 		XXL
 	}

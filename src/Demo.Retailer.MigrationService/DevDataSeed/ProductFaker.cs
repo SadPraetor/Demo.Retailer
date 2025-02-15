@@ -5,7 +5,7 @@ namespace Demo.Retailer.MigrationService
 	public class ProductFaker
 	{
 
-		private Faker<Product> _faker;
+		private readonly Faker<Product> _faker;
 
 		public ProductFaker(int useSeed = 999)
 		{
