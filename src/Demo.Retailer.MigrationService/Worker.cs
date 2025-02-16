@@ -1,3 +1,4 @@
+using Demo.Retailer.MigrationService.DevDataSeed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Retailer.MigrationService;
@@ -19,16 +20,24 @@ public class Worker : BackgroundService
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
+		_logger.LogInformation("Migration Worker running at: {time}", DateTimeOffset.UtcNow);
 		if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
 		{
-			_logger.LogInformation("Migration Worker running at: {time}", DateTimeOffset.UtcNow);
 			using var scope = _scopeFactory.CreateScope();
 			var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
+			using (var _ = new ActionTimer((elapsed)=>_logger.LogInformation("Migration done in {elapsed}",elapsed)))
+			{
+				await context.Database.MigrateAsync();			
+			}
 
-			await context.Database.MigrateAsync();
-			_logger.LogInformation("Migration applied");
+			var logger = scope.ServiceProvider.GetRequiredService<ILogger<DataSeedManager>>();
 
-			
+			var seedManager = new DataSeedManager(logger);
+
+			using (var _ = new ActionTimer((elapsed)=> _logger.LogInformation("Data seed done in {elapsed}", elapsed)))
+			{
+				await seedManager.RunSeedOperationAsync(context, SeedSize.Medium);
+			}
 
 		}
 		else
