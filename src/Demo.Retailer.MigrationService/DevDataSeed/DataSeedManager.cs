@@ -8,7 +8,7 @@
 		private readonly LineItemFaker _lineItemsFaker;
 		private readonly ILogger<DataSeedManager> _logger;
 
-		private readonly int _batchSize = 200;
+		private readonly int _batchSize = 500;
 
 		public DataSeedManager(ILogger<DataSeedManager> logger,int seed = 999)
 		{
@@ -89,7 +89,7 @@
 				customerIds.AddRange(items.Select(x => x.Id));
 				count += batch;
 
-				if((count % 1000) == 0)
+				if((count % 2000) == 0)
 				{
 					_logger.LogDebug("{count} customers seeded", count);
 				}
@@ -117,7 +117,7 @@
 				orderIds.AddRange(items.Select(x => x.Id));
 				count += batch;
 
-				if ((count % 1000) == 0)
+				if ((count % 2000) == 0)
 				{
 					_logger.LogDebug("{count} orders seeded", count);
 				}
@@ -142,7 +142,7 @@
 				context.ChangeTracker.Clear();				
 				count += batch;
 
-				if ((count % 1000) == 0)
+				if ((count % 2000) == 0)
 				{
 					_logger.LogDebug("{count} line items seeded", count);
 				}

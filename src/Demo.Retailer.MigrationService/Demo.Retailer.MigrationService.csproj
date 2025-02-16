@@ -17,5 +17,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Demo.Retailer.Data\Demo.Retailer.Data.csproj" />
+	  <ProjectReference Include="..\Demo.Retailer.ServiceDefaults\Demo.Retailer.ServiceDefaults.csproj" />
 	</ItemGroup>
 </Project>
