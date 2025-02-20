@@ -20,7 +20,7 @@ builder.Services
 	.RegisterOpenApi();
 
 builder.Services.AddDbContext<StoreDbContext>(options =>
-				 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductsDb"))
+				 options.UseSqlServer(builder.Configuration.GetConnectionString("DemoRetailer"))
 			);
 
 builder.Services.AddScoped<IUriGenerator, UriGenerator>();

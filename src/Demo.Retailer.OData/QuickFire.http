@@ -1,0 +1,16 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+### request
+GET https://localhost:7206/odata/$metadata
+
+### request
+GET https://localhost:7206/odata/Products
+
+### request
+GET https://localhost:7206/odata/Products?$filter=Price%20gt%20100
+
+### request
+GET https://localhost:7206/odata/Products?$filter=Price%20gt%20100&count=true
+
+
+### request
+GET https://localhost:7206/odata/Products/$count?$filter=Price%20gt%20100

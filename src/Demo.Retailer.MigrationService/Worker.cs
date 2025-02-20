@@ -36,7 +36,10 @@ public class Worker : BackgroundService
 
 			using (var _ = new ActionTimer((elapsed)=> _logger.LogInformation("Data seed done in {elapsed}", elapsed)))
 			{
-				await seedManager.RunSeedOperationAsync(context, SeedSize.Medium);
+				if(!context.Products.Any())
+				{
+					await seedManager.RunSeedOperationAsync(context, SeedSize.Small);
+				}
 			}
 
 		}

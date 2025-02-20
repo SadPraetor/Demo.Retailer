@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Demo.Retailer.Api\Demo.Retailer.Api.csproj" />
     <ProjectReference Include="..\Demo.Retailer.Data\Demo.Retailer.Data.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\Demo.Retailer.MigrationService\Demo.Retailer.MigrationService.csproj" />
+    <ProjectReference Include="..\Demo.Retailer.OData\Demo.Retailer.OData.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,8 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.Tests", "test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54461025-311F-4BD3-BA74-C5FFF83E696A}"
 	ProjectSection(SolutionItems) = preProject
-		readme.md = readme.md
 		Directoryxyz.Build.props = Directoryxyz.Build.props
+		readme.md = readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.AppHost", "src\Demo.Retailer.AppHost\Demo.Retailer.AppHost.csproj", "{5B6E2AF2-91DF-4601-940D-A85071BEAB88}"
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.MigrationService", "src\Demo.Retailer.MigrationService\Demo.Retailer.MigrationService.csproj", "{A4D37F31-CFC4-451C-A498-50B185996C6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.Data", "src\Demo.Retailer.Data\Demo.Retailer.Data.csproj", "{78353C9A-2C3E-4E41-A897-421A4210AD66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Retailer.OData", "src\Demo.Retailer.OData\Demo.Retailer.OData.csproj", "{29247173-3E3D-8092-BF00-4AE8614E7739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,18 @@ Global
 		{78353C9A-2C3E-4E41-A897-421A4210AD66}.Release|x64.Build.0 = Release|Any CPU
 		{78353C9A-2C3E-4E41-A897-421A4210AD66}.Release|x86.ActiveCfg = Release|Any CPU
 		{78353C9A-2C3E-4E41-A897-421A4210AD66}.Release|x86.Build.0 = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|x64.Build.0 = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Debug|x86.Build.0 = Debug|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|x64.ActiveCfg = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|x64.Build.0 = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|x86.ActiveCfg = Release|Any CPU
+		{29247173-3E3D-8092-BF00-4AE8614E7739}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +132,7 @@ Global
 		{13BBD898-3DB2-DCAD-6CA8-13B443B9FD93} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A4D37F31-CFC4-451C-A498-50B185996C6F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{78353C9A-2C3E-4E41-A897-421A4210AD66} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{29247173-3E3D-8092-BF00-4AE8614E7739} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD31F44B-92C2-4D7C-93A9-49916FC98837}
