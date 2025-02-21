@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace Demo.Retailer.OData.Controllers
 {
-	[Route("odata/products")]
-	public class ProductController : ODataController
+	[Route("odata/[controller]")]
+	public class ProductsController : ODataController
 	{
 		private readonly StoreDbContext _context;
 
-		public ProductController(StoreDbContext context)
+		public ProductsController(StoreDbContext context)
 		{
 			_context = context;
 		}

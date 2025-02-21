@@ -25,10 +25,9 @@ builder.Services.AddControllers()
         .Filter()
         .OrderBy()
         .Expand()
-        .Count()
+        .Count()    //headsup, if entity set is "Products", also controller name must be "ProductsController". Just "ProductController" wont work for /Products/$count
         .SetMaxTop(100)
-        .AddRouteComponents("odata", modelBuilder.GetEdmModel());
-        options.RouteOptions.EnableKeyAsSegment = true;
+        .AddRouteComponents("odata", modelBuilder.GetEdmModel());        
     });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
