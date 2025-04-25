@@ -1,10 +1,31 @@
 using Aspire.Hosting;
+using Microsoft.Extensions.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+	
+
+var elastic = builder.AddElasticsearch("demo-retailer-elastic")
+	.WithImageTag("8.18.0")
+	
+	.WithEnvironment("discovery.type", "single-node")
+	.WithEnvironment("xpack.security.enabled", "false")
+	//.WithEnvironment("xpack.security.enrollment.enabled", "true")
+	//.WithDataVolume("demo-retailer-elastic-data")	
+	//.WithLifetime(ContainerLifetime.Persistent)
+	.WithHttpsEndpoint(9200,9200)
+	.PublishAsConnectionString();
+
+
+builder.AddContainer("kibana", "kibana", "8.18.0")
+	.WithReference(elastic)
+	.WaitFor(elastic)
+	.WithEndpoint(5601, 5601);
+
+
 var db = builder.AddSqlServer("demo-retailer-sql", port: 1433)
-	.WithImageTag("2022-CU16-ubuntu-22.04")
-	.WithContainerName("demo-retailer")
+	.WithImageTag("2022-CU16-ubuntu-22.04")	
+	.WithContainerName("demo-retailer-sql")
 	.WithEnvironment("ACCEPT_EULA", "Y")
 	.WithEnvironment("TrustServerCertificate", "True")
 	.WithEnvironment("Encrypt", "True")	

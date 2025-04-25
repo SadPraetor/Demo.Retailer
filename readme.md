@@ -15,7 +15,7 @@ Original version can be found on branches `original/master` and `original/reposi
 > - [X] Implement route building adjusted for proxy scenario
 > - [X] Cleanup tests
 
-> - [ ] Aspire implementation
+> - [X] Aspire implementation
 > - [ ] Postgres
 > - [ ] Expand data model
 > - [ ] Migration project
