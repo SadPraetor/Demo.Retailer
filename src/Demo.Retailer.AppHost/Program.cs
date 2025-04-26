@@ -18,6 +18,7 @@ var elastic = builder.AddElasticsearch("demo-retailer-elastic")
 
 
 builder.AddContainer("kibana", "kibana", "8.18.0")
+	.WithEnvironment("ELASTICSEARCH_HOSTS", "http://demo-retailer-elastic:9200")
 	.WithReference(elastic)
 	.WaitFor(elastic)
 	.WithEndpoint(5601, 5601);
